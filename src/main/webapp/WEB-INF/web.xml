@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="5.0">
+  <servlet>
+    <description></description>
+    <display-name>ClientController</display-name>
+    <servlet-name>ClientController</servlet-name>
+    <servlet-class>controller.ClientController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClientController</servlet-name>
+    <url-pattern>/ClientController</url-pattern>
+  </servlet-mapping>
+  <display-name>Projet_JSP</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>LivreurController</display-name>
+    <servlet-name>LivreurController</servlet-name>
+    <servlet-class>controller.LivreurController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LivreurController</servlet-name>
+    <url-pattern>/LivreurController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChefcuisinerController</display-name>
+    <servlet-name>ChefcuisinerController</servlet-name>
+    <servlet-class>controller.ChefcuisinerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChefcuisinerController</servlet-name>
+    <url-pattern>/ChefcuisinerController</url-pattern>
+  </servlet-mapping>
+</web-app>
