@@ -2,13 +2,20 @@ package modele;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Client")
 public class Client {
-	@Id 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id_cli; 
+	public Long getId() {
+		return id_cli;
+	}
 	@Column(name = "login")
 	private String login;
 	@Column(name = "password")
@@ -69,8 +76,8 @@ public class Client {
 	}
 	@Override
 	public String toString() {
-		return "Client [login=" + login + ", password=" + password + ", nom=" + nom + ", prenom=" + prenom
-				+ ", adresse=" + adresse + ", numtel=" + numtel + "]";
+		return "Client [id=" + id_cli + ", login=" + login + ", password=" + password + ", nom=" + nom + ", prenom="
+				+ prenom + ", adresse=" + adresse + ", numtel=" + numtel + "]";
 	}
 
 }

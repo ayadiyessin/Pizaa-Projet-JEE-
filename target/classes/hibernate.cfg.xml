@@ -15,5 +15,12 @@
 <mapping class="modele.Client"/>
 <mapping class="modele.Livreur"/>
 <mapping class="modele.Chefcuisiner"/>
+<mapping class="modele.Ingredient"/>
+<mapping class="modele.Commande"/>
+<mapping class="modele.Lignecommande"/>
+<mapping class="modele.Pizza"/>
+<mapping class="modele.Pizzachoisie"/>
+<mapping class="modele.IngredPizza"/>
+<mapping class="modele.Taillepizza"/>
 </session-factory>
 </hibernate-configuration>
