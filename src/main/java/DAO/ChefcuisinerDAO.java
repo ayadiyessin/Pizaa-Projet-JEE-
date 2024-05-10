@@ -6,24 +6,23 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import modele.Chefcuisiner;
 import modele.Client;
-import modele.Livreur;
 
-
-public class ClientDAO {
+public class ChefcuisinerDAO {
 	private SessionFactory sessionFactory;
 
-	public ClientDAO() {
+	public ChefcuisinerDAO() {
 		sessionFactory = util.HibernateUtil.getSessionFactory();
 	}
 
-	public boolean create(Client c) {
+	public boolean create(Chefcuisiner ch) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		boolean success = false;
 		try {
 			tx = session.beginTransaction();
-			session.persist(c);
+			session.persist(ch);
 			tx.commit();
 			success = true;
 		} catch (Exception e) {
@@ -36,29 +35,25 @@ public class ClientDAO {
 		return success;
 	}
 
-	public Client findById(long id) {
+	public Chefcuisiner findById(long id) {
 		Session session = sessionFactory.openSession();
-		Client c = session.get(Client.class, id);
+		Chefcuisiner ch = session.get(Chefcuisiner.class, id);
 		session.close();
-		return c;
+		return ch;
 	}
 	
 	
 	
-	public boolean update(Long id, String nom, String prenom, String psw, String adresse, int numtel) {
+	public boolean update(Long id,String psw) {
 		Session session = sessionFactory.openSession();
-		Client c = session.get(Client.class, id);
+		Chefcuisiner ch = session.get(Chefcuisiner.class, id);
 		boolean success = false;
-		if (c != null) {
-			c.setNom(nom);
-			c.setPrenom(prenom);
-			c.setPassword(psw);
-			c.setAdresse(adresse);
-			c.setNumtel(numtel);
+		if (ch != null) {
+			ch.setPassword(psw);
 			Transaction tx = null;
 			try {
 				tx = session.beginTransaction();
-				session.persist(c);
+				session.persist(ch);
 				tx.commit();
 				success = true;
 			} catch (Exception e) {
@@ -74,13 +69,13 @@ public class ClientDAO {
 
 	public boolean delete(long id) {
 		Session session = sessionFactory.openSession();
-		Client c = session.get(Client.class, id);
+		Chefcuisiner ch = session.get(Chefcuisiner.class, id);
 		boolean success = false;
-		if (c != null) {
+		if (ch != null) {
 			Transaction tx = null;
 			try {
 				tx = session.beginTransaction();
-				session.remove(c);
+				session.remove(ch);
 				tx.commit();
 				success = true;
 			} catch (Exception e) {
@@ -94,11 +89,10 @@ public class ClientDAO {
 		return success;
 	}
 	
-	public List<Client> findAll(){
+	public List<Chefcuisiner> findAll(){
 		Session session=sessionFactory.openSession();
-		List<Client> results = session.createQuery("from Client",Client.class).getResultList();
+		List<Chefcuisiner> results = session.createQuery("from Chefcuisiner",Chefcuisiner.class).getResultList();
 		session.close();
 		return results;
 	}
-	
 }

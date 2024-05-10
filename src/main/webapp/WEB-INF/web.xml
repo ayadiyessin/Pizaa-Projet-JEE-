@@ -39,4 +39,14 @@
     <servlet-name>ChefcuisinerController</servlet-name>
     <url-pattern>/ChefcuisinerController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PizzaController</display-name>
+    <servlet-name>PizzaController</servlet-name>
+    <servlet-class>controller.PizzaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PizzaController</servlet-name>
+    <url-pattern>/PizzaController</url-pattern>
+  </servlet-mapping>
 </web-app>
