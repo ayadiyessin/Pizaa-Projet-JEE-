@@ -19,4 +19,24 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>LivreurController</display-name>
+    <servlet-name>LivreurController</servlet-name>
+    <servlet-class>controller.LivreurController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LivreurController</servlet-name>
+    <url-pattern>/LivreurController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChefcuisinerController</display-name>
+    <servlet-name>ChefcuisinerController</servlet-name>
+    <servlet-class>controller.ChefcuisinerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChefcuisinerController</servlet-name>
+    <url-pattern>/ChefcuisinerController</url-pattern>
+  </servlet-mapping>
 </web-app>
