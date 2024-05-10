@@ -35,13 +35,11 @@ public class Commande {
 	@ManyToOne
 	@JoinColumn(name = "id_liv")
 	private Livreur livreur;
-	@ManyToOne
-	@JoinColumn(name = "id_chefc")
-	private Chefcuisiner chefcuisiner;
+
 	@OneToMany(mappedBy = "commande")
 	private List<Lignecommande> lignecommandes;
 	public Commande(int num_com, Date date_com, int retard, String etat_com, int valid_com, Client client,
-			Livreur livreur, Chefcuisiner chefcuisiner) {
+			Livreur livreur) {
 		super();
 		this.num_com = num_com;
 		this.date_com = date_com;
@@ -50,7 +48,6 @@ public class Commande {
 		this.valid_com = valid_com;
 		this.client = client;
 		this.livreur = livreur;
-		this.chefcuisiner = chefcuisiner;
 	}
 	public List<Lignecommande> getLignecommandes() {
 		return lignecommandes;
@@ -100,12 +97,7 @@ public class Commande {
 	public void setLivreur(Livreur livreur) {
 		this.livreur = livreur;
 	}
-	public Chefcuisiner getChefcuisiner() {
-		return chefcuisiner;
-	}
-	public void setChefcuisiner(Chefcuisiner chefcuisiner) {
-		this.chefcuisiner = chefcuisiner;
-	}
+
 	public Long getId_com() {
 		return id_com;
 	}
@@ -113,7 +105,7 @@ public class Commande {
 	public String toString() {
 		return "Commande [id_com=" + id_com + ", num_com=" + num_com + ", date_com=" + date_com + ", retard=" + retard
 				+ ", etat_com=" + etat_com + ", valid_com=" + valid_com + ", client=" + client + ", livreur=" + livreur
-				+ ", chefcuisiner=" + chefcuisiner + ", lignecommandes=" + lignecommandes + "]";
+				+", lignecommandes=" + lignecommandes + "]";
 	}
 	
 	
