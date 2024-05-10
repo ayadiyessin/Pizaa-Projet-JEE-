@@ -27,6 +27,9 @@ public class Pizza {
 	private int archive;
 	@OneToMany(mappedBy = "pizza")
 	private List<Pizzachoisie> pizzachoisie;
+	public Pizza() {
+		
+	}
 	public Pizza(String nom, String image, float prix, int archive) {
 		super();
 		this.nom = nom;
