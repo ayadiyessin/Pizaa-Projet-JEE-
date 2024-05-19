@@ -1,0 +1,121 @@
+@charset "UTF-8";
+/* Styles pour centrer le formulaire de connexion */
+.connexion-livreur {
+    width: 300px; 
+    margin: 0 auto; 
+    padding: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    background-color: #f9f9f9; 
+}
+
+
+.connexion-livreur h2 {
+    text-align: center; 
+    color: #333; 
+}
+.input-group .form-control {
+            padding-left: 2.5rem; /* Espace pour l'icône */
+        }
+        .input-group .input-group-text {
+            position: absolute;
+            left: 0;
+            height: 100%;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            border: none;
+            background: none;
+            padding: 0 0.75rem;
+            pointer-events: none;
+        }
+
+/* modale profile*/
+
+
+/*table total modal */
+.no-border-top {
+            border-top: none !important;
+        }
+.divider {
+            border-top: 1px solid #dee2e6;
+            margin: 0.5rem 0;
+        }
+        
+/* Style pour les images de pizza */
+        .pizza-img {
+            max-width: 100px;
+            height: auto;
+        }
+        
+/*desinge acceuil client */
+        .timeline {
+            position: relative;
+            padding: 0;
+            list-style: none;
+            margin: 0;
+          
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #dee2e6;
+            left: 20px;
+            margin: 0;
+        }
+
+        
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #dee2e6;
+            border: 2px solid white;
+            top: 0;
+            left: 12px;
+        }
+
+        .timeline-item.active::before {
+            background: #0d6efd;
+        }
+
+        .timeline-item .timeline-icon {
+            position: relative;
+            margin-right: 10px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #dee2e6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-item .timeline-icon i {
+            font-size: 16px;
+        }
+
+        .timeline-item .timeline-content {
+            margin-left: 10px;
+        }
+
+        .timeline-item.active .timeline-icon {
+            background: #0d6efd;
+        }
+        .timeline-item {
+            /*border-right: 2px solid #000;  Couleur et épaisseur de la bordure */
+            padding-right: 20px; /* Espacement entre la bordure et le contenu */
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+        }
+        
