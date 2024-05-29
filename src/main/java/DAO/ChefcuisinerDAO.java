@@ -5,9 +5,11 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import modele.Chefcuisiner;
 import modele.Client;
+import modele.Livreur;
 
 public class ChefcuisinerDAO {
 	private SessionFactory sessionFactory;
@@ -94,5 +96,19 @@ public class ChefcuisinerDAO {
 		List<Chefcuisiner> results = session.createQuery("from Chefcuisiner",Chefcuisiner.class).getResultList();
 		session.close();
 		return results;
+	}
+	/*** yessin*/
+	public Chefcuisiner findByLogin(String login) {
+	    Session session = sessionFactory.openSession();
+	    Chefcuisiner Chefcuisiner = null;
+	    try {
+	        String hql = "FROM Chefcuisiner L WHERE L.login = :login";
+	        Query<Chefcuisiner> query = session.createQuery(hql, Chefcuisiner.class);
+	        query.setParameter("login", login);
+	        Chefcuisiner = query.uniqueResult();
+	    } finally {
+	        session.close();
+	    }
+	    return Chefcuisiner;
 	}
 }

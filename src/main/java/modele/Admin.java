@@ -2,6 +2,8 @@ package modele;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -9,10 +11,18 @@ import jakarta.persistence.Table;
 @Table(name = "Admin")
 public class Admin {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id_admin; 
+	public Long getId() {
+		return id_admin;
+	}
 	@Column(name = "login")
 	private String login;
 	@Column(name = "password")
 	private String password;
+	public Admin() {
+		
+	}
 	public Admin(String login, String password) {
 		super();
 		this.login = login;

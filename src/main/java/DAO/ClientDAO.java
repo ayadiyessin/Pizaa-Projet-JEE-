@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import modele.Client;
 import modele.Livreur;
@@ -99,6 +100,20 @@ public class ClientDAO {
 		List<Client> results = session.createQuery("from Client",Client.class).getResultList();
 		session.close();
 		return results;
+	}
+	/*** yessin*/
+	public Client findByLogin(String login) {
+	    Session session = sessionFactory.openSession();
+	    Client client = null;
+	    try {
+	        String hql = "FROM Client L WHERE L.login = :login";
+	        Query<Client> query = session.createQuery(hql, Client.class);
+	        query.setParameter("login", login);
+	        client = query.uniqueResult();
+	    } finally {
+	        session.close();
+	    }
+	    return client;
 	}
 	
 }

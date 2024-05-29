@@ -32,6 +32,9 @@ public class Chefcuisiner {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public Chefcuisiner() {
+		
+	}
 	public Chefcuisiner(String login, String password) {
 		super();
 		this.login = login;

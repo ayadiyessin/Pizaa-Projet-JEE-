@@ -22,5 +22,6 @@
 <mapping class="modele.Pizzachoisie"/>
 <mapping class="modele.IngredPizza"/>
 <mapping class="modele.Taillepizza"/>
+<mapping class="modele.Admin"/>
 </session-factory>
 </hibernate-configuration>

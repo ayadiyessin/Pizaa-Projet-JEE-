@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AUTHENTIFICATION CHEF CUISINIER</title>
+<title>AUTHENTIFICATION ADMIN</title>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="stylesheet" href="../styleyessin.css">
@@ -27,7 +27,7 @@
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
-			<div class="collapse navbar-collapse" id="ftco-nav">
+			<div class="collapse navbar-collapse " id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="../index.jsp"
 						class="nav-link">Accueil</a></li>
@@ -36,11 +36,18 @@
 							propos</a></li>
 				</ul>
 
-				<ul class="navbar-nav ml-auto">
+				<ul class="navbar-nav ml-auto ">
 					<li class="nav-item"><a class="nav-link"
 						href="client/panier.jsp"><i class="fa fa-shopping-cart"></i></a></li>
-					<li class="nav-item"><a class="nav-link"><i
-							class="fa fa-user"></i></a></li>
+					<li class="nav-item">
+						<a class="nav-link"><i class="fa fa-user"></i></a>
+						<ul class="dropdo2">
+                                <li><a >Profile</a></li>
+                                <li><a >Enchère</a></li>
+                                <li><a >Déconnexion</a></li>
+                        </ul>
+							
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -58,7 +65,7 @@
           <div class="row">
             <div class="col-12">
               <div class="mb-5">
-                <h3>Connexion Chef Cuisiner</h3>
+                <h3>Connexion Administrateur</h3>
               </div>
             </div>
           </div>
@@ -67,7 +74,7 @@ String email = request.getParameter("email");
 String password = request.getParameter("password");
 String message = request.getParameter("message");
 %>
-          <form class="contact-form" action="../ChefcuisinerController" method="post">
+          <form class="contact-form" action="../AdminController" method="post">
             <div class="row gy-3 gy-md-4 overflow-hidden">
               <div class="form-group col-12">
                 <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>

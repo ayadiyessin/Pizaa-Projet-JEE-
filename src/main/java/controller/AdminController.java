@@ -6,28 +6,28 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import modele.Chefcuisiner;
+import modele.Admin;
 import modele.Livreur;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 
-import DAO.ChefcuisinerDAO;
+import DAO.AdminDAO;
 
 /**
- * Servlet implementation class ChefcuisinerController
+ * Servlet implementation class AdminController
  */
-public class ChefcuisinerController extends HttpServlet {
+public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ChefcuisinerDAO chefdao;
+	private AdminDAO addao;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChefcuisinerController() {
+    public AdminController() {
         super();
         // TODO Auto-generated constructor stub
-        this.chefdao=new ChefcuisinerDAO();
+        this.addao=new AdminDAO();
     }
 
 	/**
@@ -49,15 +49,17 @@ public class ChefcuisinerController extends HttpServlet {
 			String email = request.getParameter("email");
 	        String password = request.getParameter("password");
 	        
-	        Chefcuisiner u = chefdao.findByLogin(email);
+	            // Rechercher l'utilisateur dans la base de données
+	            Admin u = addao.findByLogin1(email);
 
+	            // Vérifier les informations de connexion
 	            if (u != null && u.getLogin().equals(email) && u.getPassword().equals(password)) {
 	                HttpSession session = request.getSession();
-	                session.setAttribute("chef", u);
-	                response.sendRedirect("/Projet_JSP/chefcuisiner/accueilChef.jsp");
+	                session.setAttribute("Livreur", u);
+	                response.sendRedirect("/Projet_JSP/index.jsp");
 	            }else {
 	            	String message = "Erreur d'authentification";
-	            	String redirectURL = request.getContextPath() + "/chefcuisiner/authentificationChef.jsp?email=" + email + "&password=" + password + "&message=" + URLEncoder.encode(message, "UTF-8");
+	            	String redirectURL = request.getContextPath() + "/admin/authentificationAdmin.jsp?email=" + email + "&password=" + password + "&message=" + URLEncoder.encode(message, "UTF-8");
 	            	response.sendRedirect(redirectURL);	            	
 	            }
 

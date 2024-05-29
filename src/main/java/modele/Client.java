@@ -28,6 +28,9 @@ public class Client {
 	private String adresse;
 	@Column(name = "numtel")
 	private int numtel;
+	public Client() {
+		
+	}
 	public Client(String login, String password, String nom, String prenom,String adresse, int numtel) {
 		super();
 		this.login = login;

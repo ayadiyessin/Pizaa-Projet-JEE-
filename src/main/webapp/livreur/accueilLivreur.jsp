@@ -12,6 +12,10 @@
         <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css" rel="stylesheet">
  <!-- Lien vers Bootstrap Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styleyessin.css">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
      <link rel="stylesheet" href="../styleyessin.css">
 
@@ -19,9 +23,50 @@
     </head>
 
     <body>
-    
-                    
-        <section>
+    <nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+		id="ftco-navbar">
+		<div class="container">
+			<a class="navbar-brand" href="../index.jsp"><span
+				class="flaticon-pizza-1 mr-1"></span>Pizza<br> <small>Delicous</small></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a href="index.jsp"
+						class="nav-link">Accueil</a></li>
+
+					<li class="nav-item"><a href="about.jsp" class="nav-link">À
+							propos</a></li>
+				</ul>
+
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link"
+						href="client/panier.jsp"><i class="fa fa-shopping-cart"></i></a></li>
+					<li class="nav-item"><a class="nav-link"><i
+							class="fa fa-user"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+        <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="../index.jsp"><i class="fa fa-home"></i>Accueil</a>
+                        <span>Liste des commandes à livrer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+        <section class="tableMargen">
             <div class="row">
                 <div class="col-2"></div>
                 <div class="col-8">
@@ -29,16 +74,18 @@
                         <div class="card-header d-flex align-items-center">
 			                <h3 class="card-title mb-0">Liste des commandes à livrer</h3>
 			                <div class="input-group ms-auto" style="width: 250px;">
-                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    <input id="myInput" class="form-control" type="text" placeholder="Rechercher..">
+			                <div class="contact-form form-group">
+                    <span class="input-group "><i class="bi bi-search"></i></span>
+                    <input id="myInput" class="form-control bottom-align" type="text" placeholder="Rechercher..">
+                    </div>
                 </div>
 			            </div>
                         
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body ">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr class="accueilLiv">
                                         <th>Numero</th>
                                         <th>Date Commande</th>
                                         <th>Client</th>
@@ -48,7 +95,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="listeDemandeurtable">
-                                    <tr>
+                                    <tr class="accueilLiv">
                                         <td>Tridennnnt</td>
                                         <td>22-02-2024</td>
                                         <td><a href="#" data-bs-toggle="modal" data-bs-target="#profile">nom Client</a></td>
@@ -85,7 +132,7 @@
                                     
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr class="accueilLiv">
                                         <th>Numero</th>
                                         <th>Date Commande</th>
                                         <th>Client</th>
@@ -254,6 +301,29 @@
   </div>
  </div>
 
+
+<footer class="ftco-footer ftco-section img">
+		<div class="overlay"></div>
+		<div class="container">
+
+			<div class="row">
+				<div class="col-md-12 text-center">
+
+					<p>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;
+						<script>
+							document.write(new Date().getFullYear());
+						</script>
+						All rights reserved | This template is made with <i
+							class="icon-heart" aria-hidden="true"></i> by <a
+							href="https://colorlib.com" target="_blank">Colorlib</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 
     <!-- Lien vers le JS de Bootstrap 5.3 et Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

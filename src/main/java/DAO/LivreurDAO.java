@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import modele.Livreur;
 
@@ -134,5 +135,19 @@ public class LivreurDAO {
 		
 		session.close();
 		return result;
+	}
+	/*** yessin*/
+	public Livreur findByLogin(String login) {
+	    Session session = sessionFactory.openSession();
+	    Livreur livreur = null;
+	    try {
+	        String hql = "FROM Livreur L WHERE L.login = :login";
+	        Query<Livreur> query = session.createQuery(hql, Livreur.class);
+	        query.setParameter("login", login);
+	        livreur = query.uniqueResult();
+	    } finally {
+	        session.close();
+	    }
+	    return livreur;
 	}
 }

@@ -27,6 +27,9 @@ public class Livreur {
 	private int numtel;
 	@Column(name = "etatdispo")
 	private int etatdispo;
+	public Livreur() {
+        // Initialize any fields if necessary
+    }
 	public Livreur(String login, String password, String nom, String prenom, String image, int numtel, int etatdispo) {
 		super();
 		this.login = login;

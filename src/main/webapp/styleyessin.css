@@ -118,4 +118,70 @@
             position: relative;
             padding-left: 40px;
         }
-        
+.accueilLiv a {
+	color : #000;
+}
+.accueilLiv th {
+	color : #000;
+}
+.bottom-align {
+    position: absolute;
+    bottom: 0;
+    /* padding-bottom: 0;*/
+}
+.tableMargen {
+    margin-top: 20px; /* Ajoute une marge en haut de 20 pixels */
+    margin-bottom: 20px; /* Ajoute une marge en bas de 20 pixels */
+}
+a.btt:hover {
+    color: #fac564;
+}
+/*connexion navbar*/
+
+  .navbar-collapse ul li:hover .dropdo2 {
+	top: 49px;
+	opacity: 1;
+	visibility: visible;
+}
+
+.navbar-collapse ul li:last-child {
+	margin-right: 0;
+}
+
+.navbar-collapse ul li .dropdo2 {
+	position: absolute;
+	right: 0;
+	top: 56px;
+	width: 150px;
+	background: #d1d1d1;
+	text-align: left;
+	padding: 2px 0;
+	z-index: 9;
+	border-radius: 6px;
+	visibility: hidden;
+	-webkit-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;
+}
+
+.navbar-collapse ul li .dropdo2 li {
+	display: block;
+	margin-right: 0;
+}
+
+.navbar-collapse ul li .dropdo2 li a {
+	font-size: 14px;
+	color: #000;
+	font-weight: 400;
+	padding: 8px 20px;
+	text-transform: capitalize;
+    text-decoration: none;
+}
+
+.navbar-collapse ul li .dropdo2 li a:after {
+	display: none;
+}
+.navbar-collapse ul li .dropdo2 li a:hover {
+	background-color: #969696;
+    border-radius: 6px;
+}
