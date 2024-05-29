@@ -30,11 +30,17 @@ public class Pizzachoisie {
 	private List<IngredPizza> ingredpizzas;
 	@OneToMany(mappedBy = "pizzachoisie")
 	private List<Lignecommande> lignecommande;
+	public Pizzachoisie() {
+		
+	}
 	public Pizzachoisie(int valid, Taillepizza taillepizza, Pizza pizza) {
 		super();
 		this.valid = valid;
 		this.taillepizza = taillepizza;
 		this.pizza = pizza;
+	}
+	public List<IngredPizza> getIngredpizzas() {
+		return ingredpizzas;
 	}
 	public int getValid() {
 		return valid;
@@ -58,6 +64,12 @@ public class Pizzachoisie {
 
 	public Long getId_pizzachois() {
 		return id_pizzachois;
+	}
+	public Long getIdpiz_pizzachois() {
+		return pizza.getId_pizza();
+	}
+	public Long getIdtail_pizzachois() {
+		return taillepizza.getId_tailpiz();
 	}
 	@Override
 	public String toString() {

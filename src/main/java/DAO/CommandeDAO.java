@@ -18,15 +18,15 @@ public class CommandeDAO {
 		sessionFactory = util.HibernateUtil.getSessionFactory();
 		//session= sessionFactory.openSession();
 	}
-	public boolean create(Commande l) {
+	public Commande create(Commande l) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
-		boolean success = false;
+		//boolean success = false;
 		try {
 			tx = session.beginTransaction();
 			session.persist(l);
 			tx.commit();
-			success = true;
+			//success = true;
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
@@ -34,7 +34,7 @@ public class CommandeDAO {
 		} finally {
 			session.close();
 		}
-		return success;
+		return l;
 	}
 	public Commande findById(long id) {
 		Session session = sessionFactory.openSession();
@@ -198,6 +198,18 @@ public class CommandeDAO {
 			if(l.getValid_com()==0)
 				result.add(l);
 		}*/
+		
+		session.close();
+		return results;
+	}
+	
+	public Commande getComNonValiderClient(Long idcli){
+
+		Session session=sessionFactory.openSession();
+		Commande results = session.createQuery("from Commande where valid_com = :validFlag and client.id_cli = :idc", Commande.class)
+				.setParameter("validFlag", 0)
+				.setParameter("idc", idcli)
+				.getSingleResult();
 		
 		session.close();
 		return results;

@@ -24,6 +24,10 @@ public class Ingredient {
 	private int archive;
 	@OneToMany(mappedBy = "ingredient")
 	private List<IngredPizza> ingredpizzas;
+	public Ingredient() {
+			
+	}
+	
 	public Ingredient(String nom, float prix, int archive) {
 		super();
 		this.nom = nom;
