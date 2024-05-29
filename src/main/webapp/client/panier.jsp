@@ -1,5 +1,14 @@
+<%@page import="DAO.PizzaDAO"%>
+<%@page import="modele.Pizzachoisie"%>
+<%@page import="DAO.PizzachoisieDAO"%>
+<%@page import="DAO.LignecommandeDAO"%>
+<%@page import="modele.Lignecommande"%>
+<%@page import="modele.Commande"%>
+<%@page import="DAO.CommandeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="modele.Pizza, java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,6 +66,17 @@
     </div>
     <!-- Breadcrumb End -->
 	<section class="before-footer-section">
+		<% 
+			Long idcli = (long) 1;
+			CommandeDAO cmdao = new CommandeDAO();
+			Commande cm = cmdao.getComNonValiderClient(idcli);
+			
+			LignecommandeDAO lcdao = new LignecommandeDAO();
+			List<Lignecommande> listLcm = lcdao.getAllLignecomparCom(cm.getId_com());
+			
+			double prixpt=0;
+			session.setAttribute("listLigneCom", listLcm);
+		%>
             <div class="container">
               <div class="row mb-5">
                 <form class="col-md-12" method="post">
@@ -73,53 +93,49 @@
                         </tr>
                       </thead>
                       <tbody>
+                      <%
+                      		PizzachoisieDAO pzchdao = new PizzachoisieDAO();
+                      		PizzaDAO pzdao = new PizzaDAO();
+ 							for(Lignecommande lcm:listLcm){ 
+ 								Pizzachoisie pzch = pzchdao.findById(lcm.getIdpiz_lignecom());
+ 								double prix = pzchdao.prixPizz(pzch.getId_pizzachois());
+ 								Pizza pz = pzdao.findById(pzch.getIdpiz_pizzachois());
+ 								prixpt+=prix;
+ 					  %>
+
                         <tr>
                           <td class="product-thumbnail">
-                            <img src="../images/pizza-5.jpg" alt="Image" class="img-fluid-panier">
+                            <img src="../images/<%=pz.getImage() %>" alt="Image" class="img-fluid-panier">
                           </td>
                           <td class="product-name">
-                            <h2 class="h5 text-black">Product 1</h2>
+                            <h2 class="h5 text-black"><%= pz.getNom() %></h2>
                           </td>
-                          <td>$49.00</td>
+                          <td><%= prix %> DT</td>
                           <td>
                             <div class="input-group mb-3 d-flex align-items-center quantity-container">
                               <div class="input-group-prepend">
                                 <button type="button" class="btn btn-black decrease">-</button>
                               </div>
-                              <input type="text" class="form-panier text-center quantity-amount" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                              <input type="text" class="form-panier text-center quantity-amount" value=<%= lcm.getQte_lignecom() %> placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                               <div class="input-group-append">
                                 <button class="btn btn-black increase" type="button">+</button>
                               </div>
                             </div>
         
                           </td>
-                          <td>$49.00</td>
-                          <td><a href="#" class="btn btn-black btn-sm">X</a></td>
-                        </tr>
-        
-                        <tr>
-                          <td class="product-thumbnail">
-                            <img src="../images/pizza-6.jpg" alt="Image" class="img-fluid-panier">
-                          </td>
-                          <td class="product-name">
-                            <h2 class="h5 text-black">Product 2</h2>
-                          </td>
-                          <td>$49.00</td>
+                          
+                          <td><%= prix*lcm.getQte_lignecom() %> DT</td>
                           <td>
-                            <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
-                              <div class="input-group-prepend">
-                                <button class="btn btn-black decrease" type="button">&minus;</button>
-                              </div>
-                              <input type="text" class="form-panier text-center quantity-amount" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                              <div class="input-group-append">
-                                <button class="btn btn-black increase" type="button">&plus;</button>
-                              </div>
-                            </div>
-        
+                          	<a href='../PanierController?idlc=<%= lcm.getId_lignecom() %>'  class="btn btn-black btn-sm">X
+                          	</a>
                           </td>
-                          <td>$49.00</td>
-                          <td><a href="#" class="btn btn-black btn-sm">X</a></td>
+                          		
                         </tr>
+        
+
+                        <%
+						}
+						%>
                       </tbody>
                     </table>
                   </div>
@@ -143,7 +159,15 @@
                           <span class="text-black">Subtotal</span>
                         </div>
                         <div class="col-md-6 text-right">
-                          <strong class="text-black">$230.00</strong>
+                          <strong class="text-black"><%= prixpt %> DT</strong>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <span class="text-black">Livraison</span>
+                        </div>
+                        <div class="col-md-6 text-right">
+                          <strong class="text-black"> 7 DT</strong>
                         </div>
                       </div>
                       <div class="row mb-5">
@@ -151,7 +175,7 @@
                           <span class="text-black">Total</span>
                         </div>
                         <div class="col-md-6 text-right">
-                          <strong class="text-black">$230.00</strong>
+                          <strong class="text-black"><%= prixpt+7 %> DT</strong>
                         </div>
                       </div>
 

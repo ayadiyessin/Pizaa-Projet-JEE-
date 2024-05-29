@@ -38,16 +38,16 @@ public class Commande {
 
 	@OneToMany(mappedBy = "commande")
 	private List<Lignecommande> lignecommandes;
-	public Commande(int num_com, Date date_com, int retard, String etat_com, int valid_com, Client client,
-			Livreur livreur) {
+	public Commande() {
+		
+	}
+	public Commande(Date date_com, int retard, String etat_com, int valid_com, Client client) {
 		super();
-		this.num_com = num_com;
 		this.date_com = date_com;
 		this.retard = retard;
 		this.etat_com = etat_com;
 		this.valid_com = valid_com;
 		this.client = client;
-		this.livreur = livreur;
 	}
 	public List<Lignecommande> getLignecommandes() {
 		return lignecommandes;

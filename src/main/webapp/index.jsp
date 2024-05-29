@@ -1,4 +1,9 @@
+<%@page import="DAO.PizzaDAO"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="modele.Pizza, java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +35,7 @@
 					<li class="nav-item active"><a href="index.jsp"
 						class="nav-link">Accueil</a></li>
 
-					<li class="nav-item"><a href="about.jsp" class="nav-link">À
+					<li class="nav-item"><a href="about.jsp" class="nav-link">Ã€
 							propos</a></li>
 				</ul>
 
@@ -79,26 +84,35 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 text-center">
-					<div class="menu-wrap">
-						<a href="#" class="menu-img img mb-4"
-							style="background-image: url(images/pizza-2.jpg);"></a>
-						<div class="text">
-							<h3>
-								<a href="#">Itallian Pizza</a>
-							</h3>
-							<p>Far far away, behind the word mountains, far from the
-								countries Vokalia and Consonantia.</p>
-							<p class="price">
-								<span>15 DT</span>
-							</p>
-							<p>
-								<a href="client/choisirPizza.jsp"
-									class="btn btn-primary btn-outline-white">Add to cart</a>
-							</p>
+				<% 
+					PizzaDAO pz = new PizzaDAO();
+					List<Pizza> lstpiz = pz.getAll();
+					session.setAttribute("listP", lstpiz);
+				%>
+
+				<c:forEach items="${listP}" var="p" varStatus="status">
+
+					<div class="col-md-3 text-center">
+						<div class="menu-wrap">
+							<a href="#" class="menu-img img mb-4"
+								style="background-image: url(images/${p.image});"></a>
+							<div class="text">
+								<h3>
+									<a>${p.nom}</a>
+								</h3>
+								<p>Far far away, behind the word mountains, far from the
+									countries Vokalia and Consonantia.</p>
+								<p class="price">
+									<span>${p.prix+10}DT</span>
+								</p>
+								<p>
+									<a href="client/choisirPizza.jsp?id=${p.id_pizza}"
+										class="btn btn-primary btn-outline-white">Add to cart</a>
+								</p>
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
 				<div class="col-md-3 text-center">
 					<div class="menu-wrap">
 						<a href="#" class="menu-img img mb-4"

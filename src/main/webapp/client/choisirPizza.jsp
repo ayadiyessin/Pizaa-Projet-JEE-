@@ -1,5 +1,11 @@
+<%@page import="modele.Ingredient"%>
+<%@page import="DAO.IngredientDAO"%>
+<%@page import="modele.Pizza"%>
+<%@page import="java.util.List"%>
+<%@page import="DAO.PizzaDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,20 +63,25 @@
     <!-- Breadcrumb End -->
     
 	<section class="ftco-section heading-section-dark">
+		<% 
+			Long pizzaId = Long.parseLong(request.getParameter("id"));
+			PizzaDAO pz = new PizzaDAO();
+			Pizza piz = pz.findById(pizzaId);
+			session.setAttribute("piz", piz);
+			
+			IngredientDAO ing = new IngredientDAO();
+			List<Ingredient> ingList = ing.findAll();
+			session.setAttribute("listIng", ingList);
+		%>
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">
 				<div class="col-md-8">
 				
 					<h2 class="mb-4">Choisir le taille et l'ingrendiant de la pizza</h2>
 
-						<img src="../images/pizza-8.jpg" alt="" class="img-fluid">
+						<img src="../images/${piz.image}" alt="" class="img-fluid">
 					</p>
-					<p>Molestiae cupiditate inventore animi, maxime sapiente optio,
-						illo est nemo veritatis repellat sunt doloribus nesciunt! Minima
-						laborum magni reiciendis qui voluptate quisquam voluptatem soluta
-						illo eum ullam incidunt rem assumenda eveniet eaque sequi deleniti
-						tenetur dolore amet fugit perspiciatis ipsa, odit. Nesciunt dolor
-						minima esse vero ut ea, repudiandae suscipit!</p>
+					<p>${piz.nom}</p>
 
 
 
@@ -79,22 +90,20 @@
 				</div>
 				<!-- .col-md-8 -->
 				<div class="col-md-4 sidebar">
-					<form action="../index.jsp" class="contact-form">
+					<form action="../PizzachoisieController" class="contact-form" method="post">
 
   						
-
+					<input type="hidden" name="pizzaId" value="${piz.id_pizza}">
 					<div class="sidebar-box">
 						<div class="categories">
 						<br>
 						<br>
 							<h3>Ingrédiant</h3>
-
-							<li><div class="form-group"><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-							  <label for="vehicle1"> I have a bike</label></div></li>
-							<li><div class="form-group"><input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-							  <label for="vehicle2"> I have a car</label></div></li>
-							<li><div class="form-group"><input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-								<label for="vehicle3"> I have a dog</label></div></li>
+							<c:forEach items="${listIng}" var="ig" varStatus="status">
+								<li><div class="form-group"><input type="checkbox" id="ing${ig.id_ingred}" name="selectedIngredients" value="${ig.id_ingred}">
+								  <label for="ing${ig.id_ingred}">${ig.nom}</label></div></li>
+								
+							</c:forEach>
 						</div>
 					</div>
 					
@@ -102,16 +111,16 @@
 						<div class="categories">
 							<h3>Taille de pizza</h3>
 
-							<li><div class="form-group"><input type="radio" id="html" name="fav_language" value="HTML">
-  									<label for="html">HTML</label></div></li>
-							<li><div class="form-group"><input type="radio" id="css" name="fav_language" value="CSS">
-  									<label for="css">CSS</label></div></li>
-							<li><div class="form-group"><input type="radio" id="javascript" name="fav_language" value="JavaScript">
-  									<label for="javascript">JavaScript</label></div></li>
+							<li><div class="form-group"><input type="radio" id="s" name="taille" value="1">
+  									<label for="s">S</label></div></li>
+							<li><div class="form-group"><input type="radio" id="m" name="taille" value="2" checked>
+  									<label for="m">M</label></div></li>
+							<li><div class="form-group"><input type="radio" id="l" name="taille" value="3">
+  									<label for="l">L</label></div></li>
 						</div>
 					</div>
 						<div class="form-group btnch">
-                			<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                			<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5" name="validpizza">
               			</div>
 					</form>
 

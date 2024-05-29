@@ -1,9 +1,12 @@
 package DAO;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import modele.IngredPizza;
 import modele.Ingredient;
 
 
@@ -12,6 +15,13 @@ public class IngredientDAO {
 	
 	public IngredientDAO() {
 		sessionFactory = util.HibernateUtil.getSessionFactory();
+	}
+	
+	public List<Ingredient> findAll(){
+		Session session=sessionFactory.openSession();
+		List<Ingredient> results = session.createQuery("from Ingredient",Ingredient.class).getResultList();
+		session.close();
+		return results;
 	}
 	
 	public boolean create(Ingredient i) {

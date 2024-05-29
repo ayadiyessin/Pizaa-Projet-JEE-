@@ -61,6 +61,7 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+<<<<<<< HEAD
     <display-name>AdminController</display-name>
     <servlet-name>AdminController</servlet-name>
     <servlet-class>controller.AdminController</servlet-class>
@@ -68,5 +69,34 @@
   <servlet-mapping>
     <servlet-name>AdminController</servlet-name>
     <url-pattern>/AdminController</url-pattern>
+=======
+    <display-name>IngredientController</display-name>
+    <servlet-name>IngredientController</servlet-name>
+    <servlet-class>controller.IngredientController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IngredientController</servlet-name>
+    <url-pattern>/IngredientController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PizzachoisieController</display-name>
+    <servlet-name>PizzachoisieController</servlet-name>
+    <servlet-class>controller.PizzachoisieController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PizzachoisieController</servlet-name>
+    <url-pattern>/PizzachoisieController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PanierController</display-name>
+    <servlet-name>PanierController</servlet-name>
+    <servlet-class>controller.PanierController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PanierController</servlet-name>
+    <url-pattern>/PanierController</url-pattern>
+>>>>>>> f33f57d (ali v3)
   </servlet-mapping>
 </web-app>

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import modele.Client;
+import modele.Livreur;
 import modele.Pizza;
 
 public class PizzaDAO {
@@ -34,5 +35,12 @@ public class PizzaDAO {
 		List<Pizza> results = session.createQuery("from Pizza",Pizza.class).getResultList();
 		session.close();
 		return results;
+	}
+	
+	public Pizza findById(long id) {
+		Session session = sessionFactory.openSession();
+		Pizza p = session.get(Pizza.class, id);
+		session.close();
+		return p;
 	}
 }

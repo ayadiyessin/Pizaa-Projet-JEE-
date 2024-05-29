@@ -20,6 +20,9 @@ public class IngredPizza {
 	@ManyToOne
 	@JoinColumn(name = "id_pizzachois")
 	private Pizzachoisie pizzachoisie;
+	public IngredPizza() {
+		
+	}
 	public IngredPizza(Ingredient ingredient, Pizzachoisie pizzachoisie) {
 		super();
 		this.ingredient = ingredient;
@@ -39,6 +42,9 @@ public class IngredPizza {
 	}
 	public Long getId_ingredpiz() {
 		return id_ingredpiz;
+	}
+	public Long getIding_ingredpiz() {
+		return ingredient.getId_ingred();
 	}
 	@Override
 	public String toString() {

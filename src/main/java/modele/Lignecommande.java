@@ -25,6 +25,9 @@ public class Lignecommande {
 	@ManyToOne
 	@JoinColumn(name = "id_com")
 	private Commande commande;
+	public Lignecommande() {
+		
+	}
 	public Lignecommande(int qte_lignecom, int valid_lignecom, Pizzachoisie pizzachoisie, Commande commande) {
 		super();
 		this.qte_lignecom = qte_lignecom;
@@ -58,6 +61,10 @@ public class Lignecommande {
 	}
 	public Long getId_lignecom() {
 		return id_lignecom;
+	}
+	
+	public Long getIdpiz_lignecom() {
+		return pizzachoisie.getId_pizzachois();
 	}
 	@Override
 	public String toString() {
