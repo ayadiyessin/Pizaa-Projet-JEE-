@@ -101,6 +101,9 @@ public class Commande {
 	public Long getId_com() {
 		return id_com;
 	}
+	public Long getId_Client() {
+		return getClient().getId();
+	}
 	@Override
 	public String toString() {
 		return "Commande [id_com=" + id_com + ", num_com=" + num_com + ", date_com=" + date_com + ", retard=" + retard

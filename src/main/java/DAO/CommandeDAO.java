@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 
 import modele.Client;
 import modele.Commande;
+import modele.Livreur;
+
 import java.util.List;
 
 public class CommandeDAO {
@@ -137,6 +139,28 @@ public class CommandeDAO {
 		}
 		return success;
 	}
+	public boolean updateLivreur(Long id,Livreur idliv) {
+		Session session = sessionFactory.openSession();
+		Commande l = session.get(Commande.class, id);
+		boolean success = false;
+		if (l != null) {
+			l.setLivreur(idliv);
+			Transaction tx = null;
+			try {
+				tx = session.beginTransaction();
+				session.persist(l);
+				tx.commit();
+				success = true;
+			} catch (Exception e) {
+				if (tx != null)
+					tx.rollback();
+				throw e;
+			} finally {
+				session.close();
+			}
+		}
+		return success;
+	}
 	public boolean updateEtatCom(Long id,String etat_com) {
 		Session session = sessionFactory.openSession();
 		Commande l = session.get(Commande.class, id);
@@ -205,15 +229,24 @@ public class CommandeDAO {
 	
 	public Commande getComNonValiderClient(Long idcli){
 
-		Session session=sessionFactory.openSession();
-		Commande results = session.createQuery("from Commande where valid_com = :validFlag and client.id_cli = :idc", Commande.class)
-				.setParameter("validFlag", 0)
-				.setParameter("idc", idcli)
-				.getSingleResult();
-		
-		session.close();
-		return results;
+	    Session session = sessionFactory.openSession();
+	    
+	    List<Commande> results = session.createQuery("from Commande where valid_com = :validFlag and client.id_cli = :idc", Commande.class)
+	            .setParameter("validFlag", 0)
+	            .setParameter("idc", idcli)
+	            .getResultList(); // Utilise getResultList() au lieu de getSingleResult()
+	    
+	    session.close();
+	    
+	    if (!results.isEmpty()) {
+	        // S'il y a des résultats, retournez le premier élément de la liste
+	        return results.get(0);
+	    } else {
+	        // S'il n'y a pas de résultats, retournez null ou gérez le cas en conséquence dans votre application
+	        return null;
+	    }
 	}
+
 	public List<Commande> getAllComByDate(){
 		//List<Commande> result = null;
 		Session session=sessionFactory.openSession();

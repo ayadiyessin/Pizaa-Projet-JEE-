@@ -185,3 +185,13 @@ a.btt:hover {
 	background-color: #969696;
     border-radius: 6px;
 }
+/*foter */
+.ftco1-footer {
+    background: #333; /* Modifier selon vos besoins */
+    color: #fff; /* Modifier selon vos besoins */
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

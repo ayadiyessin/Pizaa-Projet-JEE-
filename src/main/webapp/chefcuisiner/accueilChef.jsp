@@ -1,11 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="modele.Client"%>
+<%@page import="DAO.ClientDAO"%>
+<%@page import="modele.Commande"%>
+<%@page import="java.util.List"%>
+<%@page import="DAO.CommandeDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+
 <!DOCTYPE html>
     <html>
 
     <head>
         <meta charset="UTF-8">
-        <title>Insert title here</title>
+        <title>Accueil Chef Cuisiner</title>
 
         <!-- Bootstrap 5 CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,33 +21,87 @@
         <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css" rel="stylesheet">
  <!-- Lien vers Bootstrap Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
-  
-     <link rel="stylesheet" href="../styleyessin.css">
+    <link rel="stylesheet" href="../styleyessin.css">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 
     </head>
 
     <body>
+        <nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+		id="ftco-navbar">
+		<div class="container">
+			<a class="navbar-brand" href="../index.jsp"><span
+				class="flaticon-pizza-1 mr-1"></span>Pizza<br> <small>Delicous</small></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a href="index.jsp"
+						class="nav-link">Accueil</a></li>
+
+					<li class="nav-item"><a href="about.jsp" class="nav-link">À
+							propos</a></li>
+				</ul>
+
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link"
+						href="client/panier.jsp"><i class="fa fa-shopping-cart"></i></a></li>
+					<li class="nav-item"><a class="nav-link"><i
+							class="fa fa-user"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
     
+            <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="../index.jsp"><i class="fa fa-home"></i>Accueil</a>
+                        <span>Liste des commandes à Preparer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
                     
-        <section>
+        <section class="tableMargen">
             <div class="row">
                 <div class="col-2"></div>
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
 			                <h3 class="card-title mb-0">Liste des commandes à préparer</h3>
-			                <div class="input-group ms-auto" style="width: 250px;">
-                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    <input id="myInput" class="form-control" type="text" placeholder="Rechercher..">
-                </div>
+			               <div class="input-group ms-auto" style="width: 250px;">
+			                
+			                	<div class="contact-form form-group">
+                    				<span class="input-group "><i class="bi bi-search"></i></span>
+                    				<input id="myInput" class="form-control bottom-align" type="text" placeholder="Rechercher..">
+                    			</div>
+                			</div>
 			            </div>
                         
                         <!-- /.card-header -->
                         <div class="card-body">
+                        <% 
+							CommandeDAO co = new CommandeDAO();
+							List<Commande> lstCom = co.getAllComValider();
+							session.setAttribute("lstCom", lstCom);
+						%>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr class="accueilLiv">
                                         <th>Numero</th>
                                         <th>Date Commande</th>
                                         <th>Client</th>
@@ -48,116 +110,46 @@
                                     </tr>
                                 </thead>
                                 <tbody id="listeDemandeurtable">
-                                    <tr>
-                                        <td>Tridennnnt</td>
-                                        <td>22-02-2024</td>
-                                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#profile">nom Client</a></td>
+                                <c:if test="${not empty lstCom}">
+                                <c:forEach items="${lstCom}" var="c" varStatus="status">
+                                    <tr class="accueilLiv">
+                                        <td>${status.index + 1}</td>
+                                        <td><fmt:formatDate value="${c.date_com}" pattern="yyyy-MM-dd"/></td>
+                                        <td> 
                                         
-                                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#LancerCommandeModal">  Lancer la commande  </a> / 
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#FinaliserCommandeModal">  Finaliser commande  </a>
+                                        <a href="profileClient.jsp?id=${c.getId_Client()}"   >Détail Client</a></td>
+                                        
+                                        <!-- data-client-id="${c.getId_Client()}" -->
+                                        
+                                        <td>
+                                        	<c:choose>
+											    <c:when test="${c.etat_com == 'en attente'}">
+											       <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#LancerCommandeModal"  >Lancer la commande</a> --> 
+											   		  <a href="#" class="lancer-commande-btn" data-id="${c.getId_com()}" data-bs-toggle="modal" data-bs-target="#LancerCommandeModal">Lancer la commande</a>
+  
+											    </c:when>
+											    <c:when test="${c.etat_com == 'en cours'}">
+											       <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#LancerCommandeModal"  >Lancer la commande</a> --> 
+											   		  <a href="FinCommande.jsp?id=${c.getId_com()}" >  Finaliser commande  </a>
+  
+											    </c:when>
+											    <c:otherwise>
+											        Commande dans le phase de livrision   
+                                       
+											    </c:otherwise>
+											</c:choose>
+
+                                        	
                                         </td>
-                                        <td> <a href="commande.jsp">voir commandes </a></td>
+                                        <td> <a href="commande.jsp?id=${c.id_com}">voir commandes </a></td>
                                     </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.5</td>
-                                        <td>Win 95+</td>
-                                      
-                                        <td>A</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 6</td>
-                                        <td>Win 98+</td>
-                                      
-                                        <td>A</td>
-                                        <td>view</td>
-                                    </tr>
+                                   </c:forEach>
+                                   </c:if>
+                                    
                                     
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr class="accueilLiv">
                                         <th>Numero</th>
                                         <th>Date Commande</th>
                                         <th>Client</th>
@@ -287,24 +279,41 @@
         </div>
 <!-- lancerCommande MODAL -->
 <div class="modal fade" id="LancerCommandeModal" tabindex="-1" aria-labelledby="LancerCommandeModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="livraisonModalLabel"> Lancer la Commande ?</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Êtes-vous sûr de vouloir Lancer la commande  ?</p>
-      </div>
-      <div class="modal-footer">
-        <!-- Bouton Annuler -->
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <!-- Bouton Lancer -->
-        <button type="button" class="btn btn-primary">Lancer</button>
-      </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="livraisonModalLabel">Lancer la Commande ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir lancer la commande ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" id="confirmLancer">Lancer</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  </div>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+    <script>
+        $(document).ready(function() {
+            let commandeId;
+
+            $('.lancer-commande-btn').click(function() {
+                commandeId = $(this).data('id');
+            });
+            console.log(commandeId);
+
+            $('#confirmLancer').click(function() {
+                if (commandeId) {
+                    // Rediriger vers le servlet de lancer commande avec l'ID de la commande
+                    window.location.href = '../CommandeController?id=' + commandeId;
+                }
+            });
+        });
+    </script>
 <!-- FinaliserCommandeModal MODAL -->
 <div class="modal fade" id="FinaliserCommandeModal" tabindex="-1" aria-labelledby="FinaliserCommandeModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -349,7 +358,28 @@
 </div>
 
 
+<footer class="ftco-footer ftco-section img">
+		<div class="overlay"></div>
+		<div class="container">
 
+			<div class="row">
+				<div class="col-md-12 text-center">
+
+					<p>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;
+						<script>
+							document.write(new Date().getFullYear());
+						</script>
+						All rights reserved | This template is made with <i
+							class="icon-heart" aria-hidden="true"></i> by <a
+							href="https://colorlib.com" target="_blank">Colorlib</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 
     <!-- Lien vers le JS de Bootstrap 5.3 et Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

@@ -1,5 +1,19 @@
+<%@page import="modele.IngredPizza"%>
+<%@page import="DAO.IngredPizzaDAO"%>
+<%@page import="DAO.TaillepizzaDAO"%>
+<%@page import="modele.Taillepizza"%>
+<%@page import="modele.Pizzachoisie"%>
+<%@page import="DAO.PizzachoisieDAO"%>
+<%@page import="DAO.PizzaDAO"%>
+<%@page import="modele.Lignecommande"%>
+<%@page import="java.util.List"%>
+<%@page import="DAO.LignecommandeDAO"%>
+<%@page import="modele.Commande"%>
+<%@page import="DAO.CommandeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="modele.Pizza, java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +25,59 @@
         <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css" rel="stylesheet">
  <!-- Lien vers Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
-  
-     <link rel="stylesheet" href="../styleyessin.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styleyessin.css">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
-    <div class="container mt-5">
+<nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+		id="ftco-navbar">
+		<div class="container">
+			<a class="navbar-brand" href="../index.jsp"><span
+				class="flaticon-pizza-1 mr-1"></span>Pizza<br> <small>Delicous</small></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a href="index.jsp"
+						class="nav-link">Accueil</a></li>
+
+					<li class="nav-item"><a href="about.jsp" class="nav-link">À
+							propos</a></li>
+				</ul>
+
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link"
+						href="client/panier.jsp"><i class="fa fa-shopping-cart"></i></a></li>
+					<li class="nav-item"><a class="nav-link"><i
+							class="fa fa-user"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	            <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="../index.jsp"><i class="fa fa-home"></i>Accueil</a>
+                        <a href="accueilChef.jsp"><i class="fa fa-home"></i>Liste Commandes</a>
+                        <span>Detail Commande</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+   
+    <div class="container mt-5 tableMargen">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">Liste des Pizaa</h5>
@@ -37,30 +97,58 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <%
+                        Long commId = Long.parseLong(request.getParameter("id"));
+            			CommandeDAO cm = new CommandeDAO();
+            			Commande comm = cm.findById(commId);
+            			session.setAttribute("comm", comm);
+            			
+            			LignecommandeDAO ligCo = new LignecommandeDAO();
+            			List<Lignecommande> lstLigCom = ligCo.getAllLignecomparCom(commId);
+            			session.setAttribute("lstLigCom", lstLigCom);
+                      		PizzachoisieDAO pzchdao = new PizzachoisieDAO();
+                      		PizzaDAO pzdao = new PizzaDAO();
+                      		TaillepizzaDAO tailPiz = new TaillepizzaDAO();
+                      		int i =1;
+ 							for(Lignecommande lcm:lstLigCom){ 
+ 								Pizzachoisie pzch = pzchdao.findById(lcm.getIdpiz_lignecom());
+ 								Pizza pz = pzdao.findById(pzch.getIdpiz_pizzachois());
+ 								Taillepizza tpz = tailPiz.findById(pzch.getIdtail_pizzachois());
+ 								IngredPizzaDAO ingpdao = new IngredPizzaDAO();
+ 								List<IngredPizza> lstIng = ingpdao.getAllByPizza(pzch);
+ 								System.out.print(lstIng);
+ 								
+ 								
+ 								
+ 					  %>
                             <tr>
-                                <th scope="row">1</th>
-                                <td><img src="https://images.pexels.com/photos/1049626/pexels-photo-1049626.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="pizza-img" alt="Pizza"></td>
-                                <td>Margherita</td>
-                                <td>2</td>
-                                <td>$10</td>
-                                <td><a href="#" data-bs-toggle="modal" data-bs-target="#listeINg"> liste Ingredients </a></td>
+                                <th scope="row"><%= i %></th>
+                                <td><img src="../images/<%=pz.getImage() %>" class="pizza-img" alt="Pizza"></td>
+                                <td><%= pz.getNom() %></td>
+                                <td><%= lcm.getQte_lignecom() %></td>
+                                <td><%= tpz.getTaille() %></td>
+                                <td>
+                                <ul>
+                                <%
+                                if (lstIng != null && !lstIng.isEmpty()) {
+                                for (IngredPizza ingp : lstIng) {
+ 									
+ 									%>
+							          <li><%= ingp.getIngredientNom() %></li>
+							  
+ 									<%
+ 								}
+                                }
+                                %>
+                                </ul>
+                                	<!--  <a href="#" data-bs-toggle="modal" data-bs-target="#listeINg"> liste Ingredients </a> -->
+                                </td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td><img src="https://images.pexels.com/photos/367915/pexels-photo-367915.jpeg?auto=compress&cs=tinysrgb&w=600" class="pizza-img" alt="Pizza"></td>
-                                <td>Pepperoni</td>
-                                <td>1</td>
-                                <td>$12</td>
-                                <td>$12</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td><img src="https://images.pexels.com/photos/2619970/pexels-photo-2619970.jpeg?auto=compress&cs=tinysrgb&w=600" class="pizza-img" alt="Pizza"></td>
-                                <td>Hawaïenne</td>
-                                <td>3</td>
-                                <td>$11</td>
-                                <td>$33</td>
-                            </tr>
+                            <%
+                            i++;
+						}
+						%>
+                            
                             <!-- Ajouter plus de lignes si nécessaire -->
                         </tbody>
                     </table>
@@ -90,6 +178,29 @@
     </div>
   </div>
 </div>
+
+<footer class="ftco-footer ftco-section img">
+		<div class="overlay"></div>
+		<div class="container">
+
+			<div class="row">
+				<div class="col-md-12 text-center">
+
+					<p>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;
+						<script>
+							document.write(new Date().getFullYear());
+						</script>
+						All rights reserved | This template is made with <i
+							class="icon-heart" aria-hidden="true"></i> by <a
+							href="https://colorlib.com" target="_blank">Colorlib</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
     <!-- Lien vers le JS de Bootstrap 5.3 et Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   

@@ -1,6 +1,7 @@
 package DAO;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -124,18 +125,12 @@ public class LivreurDAO {
 		return results;
 	}
 	
-	public List<Livreur> getAllEtatdispo(){
-		List<Livreur> result = null;
-		Session session=sessionFactory.openSession();
-		List<Livreur> results = session.createQuery("from Livreur",Livreur.class).getResultList();
-		for (Livreur l : results) {
-			if(l.getEtatdispo()==0)
-				result.add(l);
-		}
-		
-		session.close();
-		return result;
-	}
+	 public List<Livreur> getAllEtatdispo() {
+	        	Session session=sessionFactory.openSession();
+	            List<Livreur> results = session.createQuery("from Livreur where etatdispo = :etatdispo", Livreur.class).setParameter("etatdispo", 0).getResultList();
+	            session.close();
+	    		return results;
+	    }
 	/*** yessin*/
 	public Livreur findByLogin(String login) {
 	    Session session = sessionFactory.openSession();

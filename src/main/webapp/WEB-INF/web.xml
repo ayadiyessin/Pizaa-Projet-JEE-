@@ -61,18 +61,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <display-name>AdminController</display-name>
-    <servlet-name>AdminController</servlet-name>
-    <servlet-class>controller.AdminController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminController</servlet-name>
-    <url-pattern>/AdminController</url-pattern>
-=======
-=======
->>>>>>> f33f57daa7702435f6f019881b129f72e7695422
     <display-name>IngredientController</display-name>
     <servlet-name>IngredientController</servlet-name>
     <servlet-class>controller.IngredientController</servlet-class>
@@ -100,9 +88,15 @@
   <servlet-mapping>
     <servlet-name>PanierController</servlet-name>
     <url-pattern>/PanierController</url-pattern>
-<<<<<<< HEAD
->>>>>>> f33f57d (ali v3)
-=======
->>>>>>> f33f57daa7702435f6f019881b129f72e7695422
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommandeController</display-name>
+    <servlet-name>CommandeController</servlet-name>
+    <servlet-class>controller.CommandeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommandeController</servlet-name>
+    <url-pattern>/CommandeController</url-pattern>
   </servlet-mapping>
 </web-app>

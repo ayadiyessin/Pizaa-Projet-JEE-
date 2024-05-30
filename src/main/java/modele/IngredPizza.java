@@ -31,6 +31,9 @@ public class IngredPizza {
 	public Ingredient getIngredient() {
 		return ingredient;
 	}
+	public String getIngredientNom() {
+		return ingredient.getNom();
+	}
 	public void setIngredient(Ingredient ingredient) {
 		this.ingredient = ingredient;
 	}
