@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import modele.Livreur;
+import modele.Pizza;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,6 +68,27 @@ public class LivreurController extends HttpServlet {
 
 	        
 	    }
+		
+		if(request.getParameter("insertlivreur")!=null) {
+		    String nom = request.getParameter("nom");
+		    String prenom = request.getParameter("prenom");
+		    String login = request.getParameter("login");
+		    String password = request.getParameter("password");
+		    String numtelStr = request.getParameter("numtel");
+		    String image = request.getParameter("image");
+
+		    // Vérification des champs vides
+		    if(nom.isEmpty() || prenom.isEmpty() || login.isEmpty() || password.isEmpty() || numtelStr.isEmpty() || image.isEmpty()) {
+		        // Redirection vers une page d'erreur ou un message d'erreur
+		        response.sendRedirect("/Projet_JSP/admin/AjoutLivreur.jsp"); 
+		    } else {
+		        int numtel = Integer.parseInt(numtelStr);
+		        Livreur l=new Livreur(login, password, nom, prenom, image, numtel, 0);
+		        
+		        livdao.create(l);
+		        response.sendRedirect("/Projet_JSP/admin/ListeLivreur.jsp"); 
+		    }
+		}
 			
 		}
 	}

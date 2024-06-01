@@ -48,7 +48,22 @@ public class PizzaController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		if(request.getParameter("insertpizza")!=null) {
+		    String nom = request.getParameter("nom");
+		    String prixStr = request.getParameter("prix");
+		    String image = request.getParameter("image");
+
+		    // Vérification des champs vides
+		    if(nom.isEmpty() || prixStr.isEmpty()|| image.isEmpty()) {
+		        // Redirection vers une page d'erreur ou un message d'erreur
+		        response.sendRedirect("/Projet_JSP/admin/AjoutPizza.jsp"); 
+		    } else {
+		        float prix = Float.parseFloat(prixStr);
+		        Pizza p=new Pizza(nom, image, prix, 0);
+		        pdao.create(p);
+		        response.sendRedirect("/Projet_JSP/admin/listPizza.jsp"); 
+		    }
+		}
 	}
 
 }

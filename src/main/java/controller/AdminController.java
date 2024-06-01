@@ -56,7 +56,7 @@ public class AdminController extends HttpServlet {
 	            if (u != null && u.getLogin().equals(email) && u.getPassword().equals(password)) {
 	                HttpSession session = request.getSession();
 	                session.setAttribute("Livreur", u);
-	                response.sendRedirect("/Projet_JSP/index.jsp");
+	                response.sendRedirect("/Projet_JSP/admin/accueilAdmin.jsp");
 	            }else {
 	            	String message = "Erreur d'authentification";
 	            	String redirectURL = request.getContextPath() + "/admin/authentificationAdmin.jsp?email=" + email + "&password=" + password + "&message=" + URLEncoder.encode(message, "UTF-8");

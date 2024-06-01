@@ -99,4 +99,24 @@
     <servlet-name>CommandeController</servlet-name>
     <url-pattern>/CommandeController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminController</display-name>
+    <servlet-name>AdminController</servlet-name>
+    <servlet-class>controller.AdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminController</servlet-name>
+    <url-pattern>/AdminController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TailleController</display-name>
+    <servlet-name>TailleController</servlet-name>
+    <servlet-class>controller.TailleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TailleController</servlet-name>
+    <url-pattern>/TailleController</url-pattern>
+  </servlet-mapping>
 </web-app>

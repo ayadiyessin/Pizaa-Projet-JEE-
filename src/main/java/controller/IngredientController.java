@@ -50,7 +50,29 @@ public class IngredientController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		if (request.getParameter("insertingredient") != null) {
+		    String nom = request.getParameter("nom");
+		    String prixStr = request.getParameter("prix");
+
+		    // Vérifiez si les champs ne sont pas vides
+		    if (nom != null && !nom.trim().isEmpty() && prixStr != null && !prixStr.trim().isEmpty()) {
+		        try {
+		            float prix = Float.parseFloat(prixStr);
+
+		            Ingredient i = new Ingredient(nom, prix, 0);
+		            idao.create(i);
+		            response.sendRedirect("/Projet_JSP/admin/listIngredient.jsp");
+		        } catch (NumberFormatException e) {
+		            // Redirection ou message d'erreur si le prix n'est pas un nombre valide
+		            response.sendRedirect("/Projet_JSP/admin/AjoutIngredients.jsp?error=invalidPrice");
+		        }
+		    } else {
+		        // Redirection ou message d'erreur si un champ est vide
+		        response.sendRedirect("/Projet_JSP/admin/AjoutIngredients.jsp?error=emptyFields");
+		    }
+		}
+
+	
 	}
 
 }

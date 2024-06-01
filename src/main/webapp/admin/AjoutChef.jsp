@@ -1,17 +1,11 @@
-<%@page import="modele.Chefcuisiner"%>
-<%@page import="DAO.ChefcuisinerDAO"%>
-<%@page import="DAO.PizzaDAO"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="modele.Pizza, java.util.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profile Chef</title>
+  <title>Ajouter chef</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -46,7 +40,6 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-
       <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
@@ -159,16 +152,16 @@
                 Livreurs
               </p>
             </a>
-            </li>
-            
                       <li class="nav-item">
             <a href="authentificationAdmin.jsp" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
-                DÃ©connexion
+                Déconnexion
               </p>
             </a>
             </li>
+            
+            
 
 
       </nav>
@@ -179,108 +172,82 @@
 
   <!-- Content Wrapper. Contains page content -->
   
-
   <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Liste Des Cuisinier</h1>
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Ajouter Un Chef Cuisinier</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="accueilAdmin.jsp">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="ChefProfile.jsp">Liste des Chef Cuisinier</a></li>
+                                <li class="breadcrumb-item active">Ajouter Un Chef Cuisinier</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content-header -->
 
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="accueilAdmin.jsp">Accueil</a></li>
-                <li class="breadcrumb-item active">Liste des Cuisinier</li>
-              </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-
-
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Liste des Chef Cuisinier</h3>
-                  <div class="card-tools">
-                  
-            <div class="input-group input-group-sm" style="width: 150px;padding-left:10px;">
-               <a class="btn btn-primary float-right" href='AjoutChef.jsp'><i class='fas fa-plus'></i> Ajouter</a> 
-              <div class="input-group-append">
-
-              </div>
-            </div>
-
-          </div>
-                </div>
-                <div class="card-body">
-                
-               <% 
-					ChefcuisinerDAO c = new ChefcuisinerDAO();
-					List<Chefcuisiner> lstc = c.findAll();
-					session.setAttribute("listc", lstc);
-				%>
-                
-                
-                   <section class='content  '>
-                      <div class='row'>
-                       <c:if test="${not empty listc}">
-                       <c:forEach items="${listc}" var="c" varStatus="status">
-                        <div class='col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column'>
-                          <div class='card bg-light d-flex flex-fill'>
-                            <div class='card-header text-muted border-bottom-0'>
-                            </div>
-                            <div class='card-body pt-0'>
-
-                              <div class='row'>
-                                <div class='col-12'>
-
-                                  <ul class='ml-4 mb-0 fa-ul text-muted' id='listADM'>
-                                    <li id='icon' class='item'><span></span> <b>Login : </b>  ${c.getLogin()}</li>
-                                    <li id='icon' class='item'><span></span> <b>Password : </b>  ${c.getPassword()}</li>
-
-                                  </ul>
-                                  
-                                </div>
-                                
-                              </div>
-
-                            </div>
-                            
-                            
-                            
-                            
-                          </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="card card-widget ">
+                        <!-- Add the bg color to the header using any of the bg-info nbedel colour profile classes -->
+                        <div class="card-widget bg-info  ">
+                            <h3 class="card-widget-username">Ajouter Un Chef Cuisinier</h3>
                         </div>
+                        <!-- /.content -->
+                        <section class="content  ">
 
-                               </c:forEach>
-                             </c:if>
-                      </div>
-                    </section>
 
-                  <!-- <a class='btn btn-danger btn-sm'   href='suppClient.php?id=$row[0]'' ><i class='fas fa-trash'></i></a> -->
-                  <!-- <i id='icon' class='fas  fa-envelope' -->
-                  
+                            <form method="post" action="../ChefcuisinerController" >
+                            <div class="card-body">
+
+
+                                    
+                                    <div class="row">
+                                    <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputpre">Login</label>
+                                                <input type="text" name="login" class="form-control" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class='form-group'>
+                                                <label for='exampleInputpre'>Password</label>
+                                                <input type='text' name='password' class='form-control' >
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="reset" class="btn btn-secondary "><i class="fas fa-times">
+                                        </i></button>
+
+                                    <button type="submit" id="btnup" name="insertChef" class="btn btn-info  float-right"><i class="fa fa-plus">
+                                        </i></button>
+
+                                </div>
+                            </form>
+
+
+                        </section>
+                    </div>
                 </div>
-
-              </div>
             </div>
-          </div>
+            <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+                <i class="fas fa-chevron-up"></i>
+            </a>
         </div>
-      </section>
 
-
-
-
-
-    </div>
 
 
   <!-- /.content-wrapper -->

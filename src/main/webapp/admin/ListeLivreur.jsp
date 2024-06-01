@@ -1,11 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@page import="modele.Livreur"%>
+<%@page import="DAO.LivreurDAO"%>
+<%@page import="modele.Chefcuisiner"%>
+<%@page import="DAO.ChefcuisinerDAO"%>
+<%@page import="DAO.PizzaDAO"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="modele.Pizza, java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Liste des livreurs</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -32,9 +40,7 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -43,12 +49,26 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
         </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
 
   </nav>
   <!-- /.navbar -->
@@ -76,7 +96,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="accueilAdmin.jsp" class="nav-link active">
+            <a href="accueilAdmin.jsp" class="nav-link " >
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -135,12 +155,21 @@
 
           </li>
           <li class="nav-item">
-            <a href="ListeLivreur.jsp" class="nav-link">
+            <a href="ListeLivreur.jsp" class="nav-link active">
               <i class="nav-icon fas fa-car"></i>
               <p>
                 Livreurs
               </p>
             </a>
+            
+                                 <li class="nav-item">
+            <a href="authentificationAdmin.jsp" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                DÃ©connexion
+              </p>
+            </a>
+            </li>
 
 
       </nav>
@@ -190,33 +219,49 @@
           </div>
                 </div>
                 <div class="card-body">
+                <% 
+					LivreurDAO l = new LivreurDAO();
+					List<Livreur> lstl = l.findAll();
+					session.setAttribute("listl", lstl);
+				%>
                    <section class='content  '>
                       <div class='row'>
-                        <div class='col-12 col-sm-6 col-md-11 d-flex align-items-stretch flex-column'>
+                       <c:if test="${not empty listl}">
+                        <c:forEach items="${listl}" var="c" varStatus="status">
+                        <div class='col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column'>
                           <div class='card bg-light d-flex flex-fill'>
                             <div class='card-header text-muted border-bottom-0'>
                             </div>
                             <div class='card-body pt-0'>
+
                               <div class='row'>
-                                <div class='col-12'>
-                                  <h6 id='icon'><b>Ali hammami</b></h6>
+                                <div class='col-11'>
+
                                   <ul class='ml-4 mb-0 fa-ul text-muted' id='listADM'>
-                                    <li id='icon' class='item'><span></span> <b>Login : </b>  Alihammami@gmail.com</li>
-                                    <li id='icon'  class='item'><span></span> <b>Numéro téléphone : </b>22222222</li>
+                                  <h6 id='icon'><b>${c.getNom()} ${c.getPrenom()} </b></h6>
+                                    <li id='icon' class='item'><span></span> <b>Login : </b>  ${c.getLogin()}</li>
+                                    <li id='icon' class='item'><span></span> <b>Password : </b>  ${c.getPassword()}</li>
+
                                   </ul>
                                   
                                 </div>
+                                <div class='col-1 d-flex justify-content-center'>
+                                    <td><div  class='project-actions text-center' style=' margin-top: 15px;'>
+                                     <a class='btn btn-primary btn-sm' href='Livreur.jsp?id=${c.getId()}'><i class='fas fa-eye'></i></a> </div></td>
+                                 </div>
                                 
                               </div>
+
                             </div>
                             
                           </div>
+
                         </div>
 
-                        <div class='col-12 col-sm-6 col-md-1 '>
-                          <td><div class='project-actions text-center'>
-                          <a class='btn btn-primary btn-sm' href='Livreur.jsp'><i class='fas fa-eye'></i></a> </div></td>
-                        </div>
+
+                        
+                          </c:forEach>
+                         </c:if>
                       </div>
                     </section>
 
@@ -240,11 +285,8 @@
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
+    <strong>Copyright &copy; 2023-2024 <a href="accueilAdmin.jsp">Pizza.Sfaxienne</a>.</strong>
+
   </footer>
 
   <!-- Control Sidebar -->
