@@ -41,7 +41,11 @@
 
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link"
-						href="client/panier.jsp"><i class="fa fa-shopping-cart"></i></a></li>
+						href="client/panier.jsp"><i class="fa fa-shopping-cart"></i>
+						<!-- ajout boole -->
+						<span class="bad round-pill bad-notif bg-danger">1</span>
+						
+						</a></li>
 					<li class="nav-item"><a class="nav-link"><i
 							class="fa fa-user"></i></a></li>
 				</ul>

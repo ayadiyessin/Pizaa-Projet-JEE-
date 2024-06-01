@@ -9067,3 +9067,41 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+/* Personnaliser les badges */
+.bad {
+    padding: 0.5em 0.5em;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+/* Personnaliser les badges arrondis */
+.bad .round-pill {
+    border-radius: 40rem;
+}
+
+/* Personnaliser la classe badge-notification */
+.bad-notif {
+    position: relative;
+    transform: translate(50%, -50%);
+    padding: 0.5em 0.75em;
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: #fff;
+    background-color: #dc3545; /* Utilise la couleur danger par défaut */
+    border-radius: 50rem;
+
+}
+
+/* Personnaliser la couleur de fond pour bg-danger */
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.img-fluid-panier{
+	width: 60px;
+	height: 60px;
+}

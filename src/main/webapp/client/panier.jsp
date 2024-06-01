@@ -1,3 +1,4 @@
+<%@page import="modele.Client"%>
 <%@page import="DAO.PizzaDAO"%>
 <%@page import="modele.Pizzachoisie"%>
 <%@page import="DAO.PizzachoisieDAO"%>
@@ -21,6 +22,10 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
+
+
 
 </head>
 <body>
@@ -112,22 +117,32 @@
                           </td>
                           <td><%= prix %> DT</td>
                           <td>
-                            <div class="input-group mb-3 d-flex align-items-center quantity-container">
+                          <div class="input-group mb-3 d-flex align-items-center quantity-container">
+							    <div class="input-group-prepend">
+							        <button type="button" class="btn btn-black decrease" data-id="<%=lcm.getId_lignecom() %>">-</button>
+							    </div>
+							    <input type="text" class="form-panier text-center quantity-amount" value="<%= lcm.getQte_lignecom() %>" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+							    <div class="input-group-append">
+							        <button class="btn btn-black increase" type="button" data-id="<%=lcm.getId_lignecom() %>">+</button>
+							    </div>
+							</div>
+                          
+                          <!-- <div class="input-group mb-3 d-flex align-items-center quantity-container">
                               <div class="input-group-prepend">
-                                <button type="button" class="btn btn-black decrease">-</button>
+                                <button type="button" class="btn btn-black decrease" data-id="<%=lcm.getIdpiz_lignecom() %>">-</button>
                               </div>
                               <input type="text" class="form-panier text-center quantity-amount" value=<%= lcm.getQte_lignecom() %> placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                               <div class="input-group-append">
-                                <button class="btn btn-black increase" type="button">+</button>
+                                <button class="btn btn-black increase" type="button" data-id="<%=lcm.getIdpiz_lignecom() %>">+</button>
                               </div>
-                            </div>
+                            </div>-->
         
                           </td>
                           
                           <td><%= prix*lcm.getQte_lignecom() %> DT</td>
                           <td>
-                          	<a href='../PanierController?idlc=<%= lcm.getId_lignecom() %>'  class="btn btn-black btn-sm">X
-                          	</a>
+                          	<a href='../PanierController?idlc=<%= lcm.getId_lignecom() %>&supp=true' class="btn btn-black btn-sm">X</a>
+
                           </td>
                           		
                         </tr>
@@ -181,7 +196,14 @@
 
                       <div class="row">
                         <div class="col-md-12">
-                          <button class="btn btn-primary py-3 px-5 ">Proceed To Checkout</button>
+                          <% 
+							Client c = (Client)session.getAttribute("client");
+						%>
+                        <form action="../PanierController" method="post">
+                        	<input type="hidden" name="idcomach" value=<%= cm.getId_com() %>>
+                        	<input type="hidden" name="idcliach" value=<%= c.getId() %>>
+                          	<button class="btn btn-primary py-3 px-5 " name="acheter">Acheter</button>
+                        </form>
                         </div>
                       </div>
                     </div>
@@ -212,8 +234,54 @@
 		</div>
 	</footer>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
 <script type="text/javascript">
-(function() {
+$(document).ready(function() {
+    $('.quantity-container .increase').on('click', function() {
+        var quantityAmount = $(this).closest('.quantity-container').find('.quantity-amount');
+        var value = parseInt(quantityAmount.val(), 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        quantityAmount.val(value);
+
+        var dataId = $(this).data('id');
+        redirectToPanierControler(dataId, value);
+    });
+
+    $('.quantity-container .decrease').on('click', function() {
+        var quantityAmount = $(this).closest('.quantity-container').find('.quantity-amount');
+        var value = parseInt(quantityAmount.val(), 10);
+        value = isNaN(value) ? 0 : value;
+        if (value > 1) {value--;
+        	quantityAmount.val(value);
+
+        	var dataId = $(this).data('id');
+        	redirectToPanierControler(dataId, value);
+        
+        }
+        else {
+            // Affichage d'une alerte à l'utilisateur
+        	Swal.fire({
+                title: "Impossible d'effectuer cette action",
+                text: "La valeur minimale est déjà atteinte",
+                icon: "warning",
+                showConfirmButton: true // Afficher le bouton de confirmation
+            });
+            
+        }
+
+        
+    });
+
+    function redirectToPanierControler(dataId, value) {
+        window.location.href = '../PanierController?dataId=' + dataId + '&value=' + value;
+    }
+});
+
+/*(function() {
 	'use strict';
 
 	var tinyslider = function() {
@@ -285,6 +353,6 @@
 	sitePlusMinus();
 
 
-})()
+})()*/
 </script>
 </html>

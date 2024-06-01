@@ -41,6 +41,20 @@ public class CommandeController extends HttpServlet {
 			message="suppression produit avec succes";
 		response.sendRedirect("/Projet_JSP/chefcuisiner/accueilChef.jsp");  
 		}
+		else if(request.getParameter("idliv")!=null) {
+			message="suppression impossible";
+			long id=Long.parseLong(request.getParameter("idliv"));
+			if(cdao.updateEtatCom(id,"en cours de livraison"))
+				message="suppression produit avec succes";
+			response.sendRedirect("/Projet_JSP/livreur/accueilLivreur.jsp");  
+			}
+		else if(request.getParameter("idlivf")!=null) {
+			message="suppression impossible";
+			long id=Long.parseLong(request.getParameter("idlivf"));
+			if(cdao.updateEtatCom(id,"commande livrée"))
+				message="suppression produit avec succes";
+			response.sendRedirect("/Projet_JSP/livreur/accueilLivreur.jsp");  
+			}
 		
 	}
 

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 
+import DAO.CommandeDAO;
 import DAO.LignecommandeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -15,10 +16,12 @@ public class PanierController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private LignecommandeDAO lcdao;
+	private CommandeDAO cmdao;
 
 	public PanierController() {
 		super();
 		lcdao = new LignecommandeDAO();
+		cmdao = new CommandeDAO();
 	}
 
 	/**
@@ -27,15 +30,50 @@ public class PanierController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Long id = Long.parseLong(request.getParameter("idlc"));
-		if (request.getParameter("del") != null) {
-			//Long lcmId = Long.parseLong(request.getParameter("lcmId"));
-			if(lcdao.deleteAll(id))
-				response.sendRedirect("/Projet_JSP/index.jsp");
+		String idlcParam = request.getParameter("idlc");
+		String suppParam = request.getParameter("supp");
+		String dataId = request.getParameter("dataId");
+        String value = request.getParameter("value");
+		System.out.println("Parsed id: " + idlcParam);
+        System.out.println("supp parameter: " + suppParam);
+
+		// Check if parameters are not null
+		if (idlcParam != null && suppParam != null) {
+		        Long id = Long.parseLong(idlcParam);
+		        
+		        // Debugging: Print the id to the console
+		        System.out.println("Parsed id: " + id);
+		        System.out.println("supp parameter: " + suppParam);
+
+		        // Call the DAO method and check the result
+		        if (lcdao.updateLigneValid(id)) {
+		            // Debugging: Print success message to the console
+		            System.out.println("Update successful. Redirecting to index.jsp");
+		            response.sendRedirect("/Projet_JSP/client/panier.jsp");
+		        } else {
+		            // Debugging: Print failure message to the console
+		            System.out.println("Update failed. Redirecting to panier.jsp");
+		            response.sendRedirect("/Projet_JSP/client/panier.jsp");
+		        }
+		    
+		} else if(value != null && dataId != null) {
+			Long idlig = Long.parseLong(dataId);
+			int val = Integer.parseInt(value);
+			System.out.println(idlig +" "+ val );
+			if(lcdao.updateQT(idlig, val)) {
+				System.out.println("aa");
+				response.sendRedirect("/Projet_JSP/client/panier.jsp");
+			}
 			
-			//response.sendRedirect("/Projet_JSP/client/panier.jsp");
 			
 		}
+		
+		else {
+		    // Handle the case where the parameters are missing
+		    System.out.println("Required parameters are missing. Redirecting to error.jsp");
+		    response.sendRedirect("/Projet_JSP/error.jsp");
+		}
+		
 		
 	}
 
@@ -45,6 +83,16 @@ public class PanierController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String message="";
+		if(request.getParameter("acheter")!=null) {
+			Long idcom=Long.parseLong(request.getParameter("idcomach"));
+			Long idcli=Long.parseLong(request.getParameter("idcliach"));
+			if(cmdao.updateCommandeForClient(idcom, idcli)) {
+				message="produit  "+idcom+" mis a jour avec succes";
+			}
+		}
+		response.sendRedirect("/Projet_JSP/index.jsp");
+		
 		
 	}
 

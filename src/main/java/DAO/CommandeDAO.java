@@ -201,8 +201,23 @@ public class CommandeDAO {
 	public List<Commande> getAllComValider(){
 		//List<Commande> result = null;
 		Session session=sessionFactory.openSession();
-		List<Commande> results = session.createQuery("from Commande where valid_com = :validFlag", Commande.class)
+		List<Commande> results = session.createQuery("from Commande where valid_com = :validFlag order by date_com asc", Commande.class)
 			    .setParameter("validFlag", 1)
+			    .getResultList();
+		/*for (Commande l : results) {
+			if(l.getValid_com()==0)
+				result.add(l);
+		}*/
+		
+		session.close();
+		return results;
+	}
+	public List<Commande> getAllComValiderDec(Long idcli){
+		//List<Commande> result = null;
+		Session session=sessionFactory.openSession();
+		List<Commande> results = session.createQuery("from Commande where valid_com = :validFlag and client.id_cli = :idc order by date_com DESC", Commande.class)
+			    .setParameter("validFlag", 1)
+			    .setParameter("idc", idcli)
 			    .getResultList();
 		/*for (Commande l : results) {
 			if(l.getValid_com()==0)
@@ -246,6 +261,25 @@ public class CommandeDAO {
 	        return null;
 	    }
 	}
+	public List<Commande> getComLivreur(Long idliv){
+
+	    Session session = sessionFactory.openSession();
+	    
+	    List<Commande> results = session.createQuery("from Commande where valid_com = :validFlag and livreur.id_liv = :idc order by date_com asc", Commande.class)
+	            .setParameter("validFlag", 1)
+	            .setParameter("idc", idliv)
+	            .getResultList(); // Utilise getResultList() au lieu de getSingleResult()
+	    
+	    session.close();
+	    
+	    if (!results.isEmpty()) {
+	        // S'il y a des résultats, retournez le premier élément de la liste
+	        return results;
+	    } else {
+	        // S'il n'y a pas de résultats, retournez null ou gérez le cas en conséquence dans votre application
+	        return null;
+	    }
+	}
 
 	public List<Commande> getAllComByDate(){
 		//List<Commande> result = null;
@@ -273,6 +307,38 @@ public class CommandeDAO {
 		
 		session.close();
 		return results;
+	}
+	public boolean updateCommandeForClient(long idCommande, long idClient) {
+		Session session = null;
+		Transaction tx = null;
+		boolean success = false;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+
+			int rowCount = session
+					.createQuery(
+							"UPDATE Commande SET valid_com = :newValidFlag WHERE client.id_cli = :idClient and id_com =:idCommande")
+					.setParameter("newValidFlag", 1)
+					.setParameter("idClient", idClient)
+					.setParameter("idCommande", idCommande)
+					.executeUpdate();
+
+			System.out.println(" commande mises à jour : " + rowCount);
+
+			tx.commit();
+			success = true;
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			throw e;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return success;
 	}
 
 }

@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import modele.Commande;
 import modele.IngredPizza;
 import modele.Lignecommande;
 import modele.Pizzachoisie;
@@ -46,27 +47,62 @@ public class LignecommandeDAO {
 	}
 
 	public boolean update(Long id, int qte_lignecom) {
-		Session session = sessionFactory.openSession();
-		Lignecommande l = session.get(Lignecommande.class, id);
-		boolean success = false;
-		if (l != null) {
-			l.setQte_lignecom(qte_lignecom);
-			Transaction tx = null;
-			try {
-				tx = session.beginTransaction();
-				session.persist(l);
-				tx.commit();
-				success = true;
-			} catch (Exception e) {
+	    Session session = null;
+	    Transaction tx = null;
+	    boolean success = false;
+	    
+	        session = sessionFactory.openSession();
+	        tx = session.beginTransaction();
+	        
+	        Lignecommande l = session.get(Lignecommande.class, id);
+	        
+	        if (l != null) {
+	        	try {
+	            l.setQte_lignecom(qte_lignecom);
+	            session.persist(l);
+	            tx.commit();
+	            success = true;
+	        } catch (Exception e) {
 				if (tx != null)
 					tx.rollback();
 				throw e;
 			} finally {
 				session.close();
 			}
-		}
-		return success;
+	        }
+	    
+	    
+	    return success;
 	}
+	public boolean updateQT(Long id, int qte_lignecom) {
+	    Session session = sessionFactory.openSession();
+	    Lignecommande l = session.get(Lignecommande.class, id);
+	    boolean success = false;
+	    if (l != null) {
+	        l.setQte_lignecom(qte_lignecom);
+	        Transaction tx = null;
+	        try {
+	            tx = session.beginTransaction();
+	            session.persist(l);
+	            tx.commit();
+	            success = true;
+	            System.out.println("Mise à jour réussie pour l'ID : " + id);
+	        } catch (Exception e) {
+	            if (tx != null)
+	                tx.rollback();
+	            System.out.println("Erreur lors de la mise à jour pour l'ID : " + id);
+	            e.printStackTrace();
+	            throw e;
+	        } finally {
+	            session.close();
+	        }
+	    } else {
+	        System.out.println("Ligne de commande introuvable pour l'ID : " + id);
+	    }
+	    return success;
+	}
+
+
 
 	public boolean delete(long id) {
 		Session session = sessionFactory.openSession();
@@ -117,12 +153,42 @@ public class LignecommandeDAO {
 			}
 		}
 	}
+	public boolean updateLigneValid(Long idLigneCommande) {
+	    Transaction tx = null;
+
+	    try (Session session = sessionFactory.openSession()) {
+	        tx = session.beginTransaction();
+
+	        // Load the entity
+	        Lignecommande ligneCommande = session.get(Lignecommande.class, idLigneCommande);
+	        if (ligneCommande != null) {
+	            // Update the field
+	            ligneCommande.setValid_lignecom(-1);
+	            
+	            // Save the entity
+	            session.update(ligneCommande);
+
+	            tx.commit();
+	            return true;
+	        } else {
+	            tx.commit();
+	            return false; // Entity not found
+	        }
+	    } catch (RuntimeException e) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }
+	        throw e;
+	    }
+	}
+
+
 
 	public List<Lignecommande> getAllLignecomparCom(Long idcom) {
 
 		Session session = sessionFactory.openSession();
 		List<Lignecommande> results = session
-				.createQuery("from Lignecommande where commande.id_com = :idc", Lignecommande.class)
+				.createQuery("from Lignecommande where commande.id_com = :idc and valid_lignecom != -1", Lignecommande.class)
 				.setParameter("idc", idcom).getResultList();
 
 		session.close();

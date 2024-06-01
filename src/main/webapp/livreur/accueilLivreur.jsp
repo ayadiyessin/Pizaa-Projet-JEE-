@@ -1,4 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page import="modele.Commande"%>
+<%@page import="java.util.List"%>
+<%@page import="DAO.CommandeDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <!DOCTYPE html>
     <html>
 
@@ -82,61 +87,62 @@
 			            </div>
                         
                         <!-- /.card-header -->
+                        <%  
+                        	long idliv=1;
+							CommandeDAO co = new CommandeDAO();
+							List<Commande> lstCom = co.getComLivreur(idliv);
+							session.setAttribute("lstCom", lstCom);
+							
+						%>
                         <div class="card-body ">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr class="accueilLiv">
                                         <th>Numero</th>
                                         <th>Date Commande</th>
-                                        <th>Client</th>
-                                        <th>Prix</th>
                                         <th>Etat</th>
                                         <th> Commande </th>
                                     </tr>
                                 </thead>
                                 <tbody id="listeDemandeurtable">
+                                <c:if test="${not empty lstCom}">
+                                <c:forEach items="${lstCom}" var="c" varStatus="status">
                                     <tr class="accueilLiv">
-                                        <td>Tridennnnt</td>
-                                        <td>22-02-2024</td>
-                                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#profile">nom Client</a></td>
-                                        <td>2500</td>
-                                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#LancerLivrisonModal"> Lancer la livraison  </a> / 
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#FinaliserLivrisonModal"> Finaliser la livraison  </a>
+                                        <td>${status.index + 1}</td>
+                                        <td><fmt:formatDate value="${c.date_com}" pattern="yyyy-MM-dd"/></td>
+                                        
+                                        <td>
+                                        <c:choose>
+											    <c:when test="${c.etat_com == 'prête'}">											   		
+  													 <a href="#" class="lancer-livrison-btn" data-id="${c.getId_com()}" data-bs-toggle="modal" data-bs-target="#LancerLivrisonModal"> Lancer la livraison  </a>  
+                                       
+											    </c:when>
+											    <c:when test="${c.etat_com == 'en cours de livraison'}">
+  													 <a href="#" class="finiser-commande-btn" data-id="${c.getId_com()}" data-bs-toggle="modal" data-bs-target="#FinaliserLivrisonModal"> Finaliser la livraison  </a>
+                                       
+											    </c:when>
+											    <c:otherwise>
+											         Commande livrée   
+                                       
+											    </c:otherwise>
+											</c:choose>
+                                        
+                                       <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#LancerLivrisonModal"> Lancer la livraison  </a> / 
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#FinaliserLivrisonModal"> Finaliser la livraison  </a>-->
                                         </td>
-                                        <td> <a href="#" data-bs-toggle="modal" data-bs-target="#ComModal">voir commandes </a></td>
+                                        <td> <a href="detailcommandeliv.jsp?id=${c.id_com}">voir commandes </a></td>
                                     </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        <td>5</td>
-                                        <td>C</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.5</td>
-                                        <td>Win 95+</td>
-                                        <td>5.5</td>
-                                        <td>A</td>
-                                        <td>view</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 6</td>
-                                        <td>Win 98+</td>
-                                        <td>6</td>
-                                        <td>A</td>
-                                        <td>view</td>
-                                    </tr>
+                                    </c:forEach>
+                                    </c:if>
+                                    
+                                   
                                     
                                 </tbody>
                                 <tfoot>
                                     <tr class="accueilLiv">
                                         <th>Numero</th>
                                         <th>Date Commande</th>
-                                        <th>Client</th>
-                                        <th>Prix</th>
+                                      
                                         <th>Etat</th>
                                         <th> Commande </th>
                                     </tr>
@@ -148,118 +154,8 @@
                 </div>
             </div>
         </section>
-        <!-- porfil modale -->
-		 <div class="modal fade" id="profile" tabindex="-1" aria-labelledby="profile" aria-hidden="true">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Profil de l'utilisateur</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Début du contenu de la carte -->
-                <div class="d-none d-lg-block">
-                    <!-- Contenu visible uniquement sur les écrans larges -->
-                    <p>Nom: John Doe</p>
-                    <p>Email: johndoe@example.com</p>
-                    <p>Tellephone: 20055401</p>
-                    <p>Afresse : lafran km 5</p>
-                    <!-- Ajoutez d'autres informations de profil ici -->
-                </div>
-                <!-- Fin du contenu de la carte -->
-            </div>
-        </div>
-    </div>
-</div>
-<!--  modal commande  -->
-        <div class="modal fade" id="ComModal" tabindex="-1" aria-labelledby="ComModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ComModalLabel">Facture de Commande</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Début du contenu de la carte -->
-                        <div>
-                            <!-- Informations du profil -->
-                            <h5>Informations du client</h5>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><strong>Nom:</strong> John Doe</p>
-                                    <p><strong>Email:</strong> johndoe@example.com</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><strong>Téléphone:</strong> 20055401</p>
-                                    <p><strong>Adresse:</strong> Lafran km 5</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        
 
-                        <!-- Tableau des commandes de pizza -->
-                        <div class="mt-4">
-                            <h5>Commandes de Pizza</h5>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Pizza</th>
-                                        <th scope="col">Quantité</th>
-                                        <th scope="col">Prix Unitaire</th>
-                                        <th scope="col">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Margherita</td>
-                                        <td>2</td>
-                                        <td>$10</td>
-                                        <td>$20</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Pepperoni</td>
-                                        <td>1</td>
-                                        <td>$12</td>
-                                        <td>$12</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Hawaïenne</td>
-                                        <td>3</td>
-                                        <td>$11</td>
-                                        <td>$33</td>
-                                    </tr>
-                                    <!-- Ajouter plus de lignes si nécessaire -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Informations de facturation -->
-                        <div class="mt-4 text-end">
-                            <div>
-                                <span><strong>Total:</strong></span>
-                                <span>$65</span>
-                            </div>
-                            <div class="divider"></div>
-                            <div>
-                                <span><strong>Prix de livraison:</strong></span>
-                                <span>$7</span>
-                            </div>
-                            <div class="divider"></div>
-                            <div>
-                                <span><strong>Total à payer:</strong></span>
-                                <span>$72</span>
-                            </div>
-                        </div>
-
-                        <!-- Fin du contenu de la carte -->
-                    </div>
-                </div>
-            </div>
-        </div>
 <!-- lancerLIVRISON MODAL -->
 <div class="modal fade" id="LancerLivrisonModal" tabindex="-1" aria-labelledby="LancerLivrisonModal" aria-hidden="true">
   <div class="modal-dialog">
@@ -275,11 +171,29 @@
         <!-- Bouton Annuler -->
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
         <!-- Bouton Lancer -->
-        <button type="button" class="btn btn-primary">Lancer</button>
+        <button type="button" id="confirmLancer" class="btn btn-primary">Lancer</button>
       </div>
     </div>
   </div>
   </div>
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+        $(document).ready(function() {
+            let commandeId;
+
+            $('.lancer-livrison-btn').click(function() {
+                commandeId = $(this).data('id');
+            });
+            console.log(commandeId);
+
+            $('#confirmLancer').click(function() {
+                if (commandeId) {
+                    // Rediriger vers le servlet de lancer commande avec l'ID de la commande
+                    window.location.href = '../CommandeController?idliv=' + commandeId;
+                }
+            });
+        });
+    </script>
 <!-- FinaliserLivrisonModal MODAL -->
 <div class="modal fade" id="FinaliserLivrisonModal" tabindex="-1" aria-labelledby="FinaliserLivrisonModal" aria-hidden="true">
   <div class="modal-dialog">
@@ -295,12 +209,28 @@
         <!-- Bouton Annuler -->
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
         <!-- Bouton Lancer -->
-        <button type="button" class="btn btn-primary">Finaliser</button>
+        <button type="button" id="confirmfin" class="btn btn-primary">Finaliser</button>
       </div>
     </div>
   </div>
  </div>
+   <script>
+        $(document).ready(function() {
+            let commandeId;
 
+            $('.finiser-commande-btn').click(function() {
+                commandeId = $(this).data('id');
+            });
+            console.log(commandeId);
+
+            $('#confirmfin').click(function() {
+                if (commandeId) {
+                    // Rediriger vers le servlet de lancer commande avec l'ID de la commande
+                    window.location.href = '../CommandeController?idlivf=' + commandeId;
+                }
+            });
+        });
+    </script>
 
 <footer class="ftco-footer ftco-section img">
 		<div class="overlay"></div>

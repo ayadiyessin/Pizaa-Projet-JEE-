@@ -149,8 +149,9 @@ a.btt:hover {
 }
 
 .navbar-collapse ul li .dropdo2 {
+	margin-top : 5px;
 	position: absolute;
-	right: 0;
+	right: 82px;
 	top: 56px;
 	width: 150px;
 	background: #d1d1d1;
@@ -182,8 +183,7 @@ a.btt:hover {
 	display: none;
 }
 .navbar-collapse ul li .dropdo2 li a:hover {
-	background-color: #969696;
-    border-radius: 6px;
+	cursor: pointer;
 }
 /*foter */
 .ftco1-footer {
