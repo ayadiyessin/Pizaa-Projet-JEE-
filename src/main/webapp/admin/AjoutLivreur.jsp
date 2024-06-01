@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Ajouter Livreur</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -32,9 +32,7 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -43,12 +41,26 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
         </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
 
   </nav>
   <!-- /.navbar -->
@@ -76,7 +88,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="accueilAdmin.jsp" class="nav-link active">
+            <a href="accueilAdmin.jsp" class="nav-link ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -135,12 +147,21 @@
 
           </li>
           <li class="nav-item">
-            <a href="ListeLivreur.jsp" class="nav-link">
+            <a href="ListeLivreur.jsp" class="nav-link active">
               <i class="nav-icon fas fa-car"></i>
               <p>
                 Livreurs
               </p>
             </a>
+            
+            <li class="nav-item">
+            <a href="authentificationAdmin.jsp" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Déconnexion
+              </p>
+            </a>
+            </li>
 
 
       </nav>
@@ -184,13 +205,13 @@
                         <section class="content  ">
 
 
-                            <form method="post" action="insertCli.php" enctype="multipart/form-data">
+                            <form method="post" action="../LivreurController" >
                             <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label for="exampleInputnom">ID</label>
-                                                <input type="text"  name="cin_client" class="form-control" >
+                                                <label for="exampleInputEmail1">Login</label>
+                                                <input type="text" name="login" class="form-control" >
                                             </div>
                                         </div>
 
@@ -213,22 +234,22 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Numéro de télephone</label>
-                                                <input type="text" name="adresse" class="form-control">
+                                                <input type="text" name="numtel" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Login</label>
-                                                <input type="text" name="adresse" class="form-control" >
+                                                <label for="exampleInputEmail1">password</label>
+                                                <input type="text" name="password" class="form-control" >
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Image</label>
-                                                <input type="text" name="numtel" class="form-control" >
-                                            </div>
+                                         <div class="custom-file">
+                      						<input type="file" name="image"  class="custom-file-input" id="customFile">
+                      						<label class="custom-file-label" for="customFile">image</label>
+                    					</div>
                                         </div>
                                     </div>
 
@@ -238,7 +259,7 @@
                                     <button type="reset" class="btn btn-secondary "><i class="fas fa-times">
                                         </i></button>
 
-                                    <button type="submit" id="btnup" class="btn btn-info  float-right"><i class="fa fa-plus">
+                                    <button type="submit" id="btnup" name="insertlivreur" class="btn btn-info  float-right"><i class="fa fa-plus">
                                         </i></button>
 
                                 </div>
@@ -258,11 +279,8 @@
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
+    <strong>Copyright &copy; 2023-2024 <a href="accueilAdmin.jsp">Pizza.Sfaxienne</a>.</strong>
+
   </footer>
 
   <!-- Control Sidebar -->

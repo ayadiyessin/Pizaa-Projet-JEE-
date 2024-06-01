@@ -1,11 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@page import="modele.Taillepizza, java.util.*"%>
+<%@page import="DAO.TaillepizzaDAO"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Liste des tailles</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -32,9 +37,7 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -43,12 +46,26 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
         </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
 
   </nav>
   <!-- /.navbar -->
@@ -76,7 +93,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="accueilAdmin.jsp" class="nav-link active">
+            <a href="accueilAdmin.jsp" class="nav-link ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -89,7 +106,7 @@
           
           
             <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-plus"></i>
               <p>
               Pizza
@@ -141,6 +158,15 @@
                 Livreurs
               </p>
             </a>
+            
+                                  <li class="nav-item">
+            <a href="authentificationAdmin.jsp" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Déconnexion
+              </p>
+            </a>
+            </li>
 
 
       </nav>
@@ -196,6 +222,11 @@
               
               <!-- /.card-header -->
               <div class="card-body">
+                <% 
+					TaillepizzaDAO t = new TaillepizzaDAO();
+					List<Taillepizza> lsttaille = t.getAll();
+					session.setAttribute("listT", lsttaille);
+				%>
                 
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
@@ -208,22 +239,17 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <c:if test="${not empty listT}">
+                  <c:forEach items="${listT}" var="c" varStatus="status">
                   <tr>
-                  <td >1</td>
-                  <td >L</td>                 
-                  <td><span class="tag tag-success">13 D</span></td>
+                  <td >${status.index + 1}</td>
+                  <td >${c.getTaille()}</td>                 
+                  <td><span class="tag tag-success">${c.getPrix()}</span></td>
 
                 </tr>
-                <tr>
-                  <td >2</td>
-                  <td >M</td>                 
-                  <td><span class="tag tag-success">11 D</span></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td >S</td>                 
-                  <td><span class="tag tag-success">9 D</span></td>
-                </tr>
+               </c:forEach>
+             </c:if>
+
 
 
                  
@@ -254,11 +280,8 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
+    <strong>Copyright &copy; 2023-2024 <a href="accueilAdmin.jsp">Pizza.Sfaxienne</a>.</strong>
+
   </footer>
 
   <!-- Control Sidebar -->

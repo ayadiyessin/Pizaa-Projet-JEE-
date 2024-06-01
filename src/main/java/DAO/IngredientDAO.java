@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 
 import modele.IngredPizza;
 import modele.Ingredient;
+import modele.Pizza;
 
 
 public class IngredientDAO {
@@ -96,6 +97,13 @@ public class IngredientDAO {
 			}
 		}
 		return success;
+	}
+	
+	public List<Ingredient> getAll(){
+		Session session=sessionFactory.openSession();
+		List<Ingredient> results = session.createQuery("from Ingredient",Ingredient.class).getResultList();
+		session.close();
+		return results;
 	}
 
 }

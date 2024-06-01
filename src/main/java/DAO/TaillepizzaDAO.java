@@ -1,10 +1,12 @@
 package DAO;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-
+import modele.Pizza;
 import modele.Taillepizza;
 
 public class TaillepizzaDAO {
@@ -86,6 +88,13 @@ public class TaillepizzaDAO {
 			}
 		}
 		return success;
+	}
+	
+	public List<Taillepizza> getAll(){
+		Session session=sessionFactory.openSession();
+		List<Taillepizza> results = session.createQuery("from Taillepizza",Taillepizza.class).getResultList();
+		session.close();
+		return results;
 	}
 
 }

@@ -1,11 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@page import="modele.Client"%>
+<%@page import="DAO.ClientDAO"%>
+<%@page import="modele.Chefcuisiner"%>
+<%@page import="DAO.ChefcuisinerDAO"%>
+<%@page import="modele.Livreur"%>
+<%@page import="DAO.LivreurDAO"%>
+<%@page import="DAO.PizzaDAO"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="modele.Pizza, java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Admin</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -32,9 +42,9 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+ <!-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div>  -->
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -43,12 +53,26 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
         </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
 
   </nav>
   <!-- /.navbar -->
@@ -142,6 +166,15 @@
                 Livreurs
               </p>
             </a>
+            
+                      <li class="nav-item">
+            <a href="authentificationAdmin.jsp" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Déconnexion
+              </p>
+            </a>
+            </li>
 
 
       </nav>
@@ -173,36 +206,77 @@
 
     <!-- Main content -->
     <section class="content">
+    
+<% 
+    PizzaDAO pz = new PizzaDAO();
+    List<Pizza> lstpiz = pz.getAll();
+    int p = lstpiz.size(); // Utilisez la méthode size() pour obtenir la taille de la liste
+    session.setAttribute("p", p);
+%>
+<% 
+    LivreurDAO liv = new LivreurDAO();
+    List<Livreur> lstliv = liv.findAll();
+    int l = lstliv.size(); // Utilisez la méthode size() pour obtenir la taille de la liste
+    session.setAttribute("l", l);
+%>
+<% 
+    ChefcuisinerDAO chef = new ChefcuisinerDAO();
+    List<Chefcuisiner> lstchef = chef.findAll();
+    int c = lstchef.size(); // Utilisez la méthode size() pour obtenir la taille de la liste
+    session.setAttribute("c", c);
+%>
+<% 
+    ClientDAO client = new ClientDAO();
+    List<Client> lstcli = client.findAll();
+    int cli = lstcli.size(); // Utilisez la méthode size() pour obtenir la taille de la liste
+    session.setAttribute("cli", cli);
+%>
+    
+    
+    
+    
+    
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
+        
+        
+        
+        
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3><%= p %></h3>
 
-                <p>New Orders</p>
+                <p>Pizza</p>
               </div>
               <div class="icon">
-                <i class="ion ion-bag"></i>
+                
+                <i class="ion ion-pizza"></i>
+                
+                
+                
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="listPizza.jsp" class="small-box-footer">Voir Plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+          
+          
+          
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3><%= l %></h3>
 
-                <p>Bounce Rate</p>
+                <p>Livreurs</p>
               </div>
               <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="nav-icon fas fa-car"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="ListeLivreur.jsp" class="small-box-footer">Voir Plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -210,14 +284,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3><%= c %></h3>
 
-                <p>User Registrations</p>
+                <p>Chefs </p>
               </div>
               <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <i class="nav-icon fas fa-user"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="chefProfile.jsp" class="small-box-footer">Voir Plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -225,14 +299,15 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3><%= cli %></h3>
 
-                <p>Unique Visitors</p>
+                <p>Clients</p>
               </div>
               <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                
+                <i class="nav-icon fas fa-users"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">Voir Plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -247,11 +322,8 @@
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
+    <strong>Copyright &copy; 2023-2024 <a href="accueilAdmin.jsp">Pizza.Sfaxienne</a>.</strong>
+
   </footer>
 
   <!-- Control Sidebar -->
