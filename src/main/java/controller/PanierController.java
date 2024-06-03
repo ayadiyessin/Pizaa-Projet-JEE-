@@ -37,21 +37,17 @@ public class PanierController extends HttpServlet {
 		System.out.println("Parsed id: " + idlcParam);
         System.out.println("supp parameter: " + suppParam);
 
-		// Check if parameters are not null
+		
 		if (idlcParam != null && suppParam != null) {
 		        Long id = Long.parseLong(idlcParam);
 		        
-		        // Debugging: Print the id to the console
 		        System.out.println("Parsed id: " + id);
 		        System.out.println("supp parameter: " + suppParam);
 
-		        // Call the DAO method and check the result
 		        if (lcdao.updateLigneValid(id)) {
-		            // Debugging: Print success message to the console
 		            System.out.println("Update successful. Redirecting to index.jsp");
 		            response.sendRedirect("/Projet_JSP/client/panier.jsp");
 		        } else {
-		            // Debugging: Print failure message to the console
 		            System.out.println("Update failed. Redirecting to panier.jsp");
 		            response.sendRedirect("/Projet_JSP/client/panier.jsp");
 		        }
@@ -69,7 +65,6 @@ public class PanierController extends HttpServlet {
 		}
 		
 		else {
-		    // Handle the case where the parameters are missing
 		    System.out.println("Required parameters are missing. Redirecting to error.jsp");
 		    response.sendRedirect("/Projet_JSP/error.jsp");
 		}

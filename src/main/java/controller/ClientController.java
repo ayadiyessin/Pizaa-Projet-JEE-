@@ -31,6 +31,14 @@ public class ClientController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String action = request.getParameter("action");
+        if ("deconnexion".equals(action)) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate(); 
+            }
+            response.sendRedirect("index.jsp");
+        } 
 		
 	}
 

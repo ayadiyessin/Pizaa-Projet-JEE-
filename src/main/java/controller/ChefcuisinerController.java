@@ -35,7 +35,14 @@ public class ChefcuisinerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String action = request.getParameter("action");
+        if ("deconnexion".equals(action)) {
+            HttpSession session = request.getSession(false); 
+            if (session != null) {
+                session.invalidate(); 
+            }
+            response.sendRedirect("index.jsp"); 
+        }
 	}
 
 	/**
@@ -67,14 +74,14 @@ public class ChefcuisinerController extends HttpServlet {
 		    String login = request.getParameter("login");
 		    String password = request.getParameter("password");
 
-		    // Vérifiez si les champs ne sont pas vides
+		   
 		    if (login != null && !login.trim().isEmpty() && password != null && !password.trim().isEmpty()) {
 		        Chefcuisiner c = new Chefcuisiner(login, password);
 
 		        chefdao.create(c);
 		        response.sendRedirect("/Projet_JSP/admin/chefProfile.jsp");
 		    } else {
-		        // Redirection ou message d'erreur si un champ est vide
+		        
 		        response.sendRedirect("/Projet_JSP/admin/AjoutChef.jsp?error=emptyFields");
 		    }
 		}

@@ -32,7 +32,7 @@ public class CommandeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		String message="";
 		if(request.getParameter("id")!=null) {
 		message="suppression impossible";

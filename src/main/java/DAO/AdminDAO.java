@@ -25,7 +25,7 @@ public class AdminDAO {
 	    Session session = sessionFactory.openSession();
 	    Admin admin = null;
 	    try {
-	        String hql = "FROM Admin A WHERE A.login = :login"; // Correction de la syntaxe HQL
+	        String hql = "FROM Admin A WHERE A.login = :login"; 
 	        Query<Admin> query = session.createQuery(hql, Admin.class);
 	        query.setParameter("login", login);
 	        admin = query.uniqueResult();

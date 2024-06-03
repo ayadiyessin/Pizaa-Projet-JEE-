@@ -76,8 +76,6 @@ public class PizzachoisieController extends HttpServlet {
 			Pizzachoisie newpc = pcdao.create(pc);
 
 			String[] selectedIngredients = request.getParameterValues("selectedIngredients");
-
-			// Ajout des ingrédients à la pizza créée
 			for (String selectedIngredientId : selectedIngredients) {
 				Long ingredientId = Long.parseLong(selectedIngredientId);
 				Ingredient ing = igdao.findById(ingredientId);

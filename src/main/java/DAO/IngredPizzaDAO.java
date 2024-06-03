@@ -83,7 +83,7 @@ public class IngredPizzaDAO {
 	                             .setParameter("r", p.getId_pizzachois())
 	                             .getResultList();
 	        } catch (Exception e) {
-	            e.printStackTrace(); // Ajoutez des logs ici pour mieux comprendre l'exception
+	            e.printStackTrace(); 
 	        } finally {
 	            if (session != null) {
 	                session.close();

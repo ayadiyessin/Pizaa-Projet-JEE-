@@ -1,21 +1,15 @@
 package controller;
 
-import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import DAO.LivreurDAO;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import modele.Livreur;
-import modele.Pizza;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-
-import DAO.ClientDAO;
-import DAO.LivreurDAO;
 
 /**
  * Servlet implementation class LivreurController
@@ -38,7 +32,14 @@ public class LivreurController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String action = request.getParameter("action");
+        if ("deconnexion".equals(action)) {
+            HttpSession session = request.getSession(false); 
+            if (session != null) {
+                session.invalidate(); 
+            }
+            response.sendRedirect("index.jsp"); 
+        }
 	}
 
 	/**
@@ -52,10 +53,8 @@ public class LivreurController extends HttpServlet {
 			String email = request.getParameter("email");
 	        String password = request.getParameter("password");
 	        
-	            // Rechercher l'utilisateur dans la base de données
 	            Livreur u = livdao.findByLogin(email);
 
-	            // Vérifier les informations de connexion
 	            if (u != null && u.getLogin().equals(email) && u.getPassword().equals(password)) {
 	                HttpSession session = request.getSession();
 	                session.setAttribute("Livreur", u);
@@ -77,9 +76,8 @@ public class LivreurController extends HttpServlet {
 		    String numtelStr = request.getParameter("numtel");
 		    String image = request.getParameter("image");
 
-		    // Vérification des champs vides
 		    if(nom.isEmpty() || prenom.isEmpty() || login.isEmpty() || password.isEmpty() || numtelStr.isEmpty() || image.isEmpty()) {
-		        // Redirection vers une page d'erreur ou un message d'erreur
+		       
 		        response.sendRedirect("/Projet_JSP/admin/AjoutLivreur.jsp"); 
 		    } else {
 		        int numtel = Integer.parseInt(numtelStr);

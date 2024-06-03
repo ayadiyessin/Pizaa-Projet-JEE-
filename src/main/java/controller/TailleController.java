@@ -46,9 +46,7 @@ public class TailleController extends HttpServlet {
 		    String taille = request.getParameter("taille");
 		    String prixStr = request.getParameter("prix");
 
-		    // Vérification des champs vides
 		    if(taille.isEmpty() || prixStr.isEmpty()) {
-		        // Redirection vers une page d'erreur ou un message d'erreur
 		        response.sendRedirect("/Projet_JSP/admin/AjoutTaille.jsp"); 
 		    } else {
 		        float prix = Float.parseFloat(prixStr);

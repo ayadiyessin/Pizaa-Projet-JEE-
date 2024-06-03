@@ -35,7 +35,14 @@ public class AdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String action = request.getParameter("action");
+        if ("deconnexion".equals(action)) {
+            HttpSession session = request.getSession(false); 
+            if (session != null) {
+                session.invalidate(); 
+            }
+            response.sendRedirect("index.jsp"); 
+        }
 	}
 
 	/**
@@ -49,13 +56,13 @@ public class AdminController extends HttpServlet {
 			String email = request.getParameter("email");
 	        String password = request.getParameter("password");
 	        
-	            // Rechercher l'utilisateur dans la base de données
+	            
 	            Admin u = addao.findByLogin1(email);
 
-	            // Vérifier les informations de connexion
+	            
 	            if (u != null && u.getLogin().equals(email) && u.getPassword().equals(password)) {
 	                HttpSession session = request.getSession();
-	                session.setAttribute("Livreur", u);
+	                session.setAttribute("admin", u);
 	                response.sendRedirect("/Projet_JSP/admin/accueilAdmin.jsp");
 	            }else {
 	            	String message = "Erreur d'authentification";

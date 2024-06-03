@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${empty sessionScope.admin}">
+    <jsp:forward page="../admin/authentificationAdmin.jsp"/>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,10 +78,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="dist/img/AdminLTELogo.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Pizza</a>
+          <a href="#" class="d-block">Administrateur</a>
         </div>
       </div>
 
@@ -155,7 +159,7 @@
             </a>
 
                       <li class="nav-item">
-            <a href="authentificationAdmin.jsp" class="nav-link">
+            <a href="../AdminController?action=deconnexion"  class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Déconnexion

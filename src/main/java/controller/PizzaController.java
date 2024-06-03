@@ -53,9 +53,7 @@ public class PizzaController extends HttpServlet {
 		    String prixStr = request.getParameter("prix");
 		    String image = request.getParameter("image");
 
-		    // Vérification des champs vides
 		    if(nom.isEmpty() || prixStr.isEmpty()|| image.isEmpty()) {
-		        // Redirection vers une page d'erreur ou un message d'erreur
 		        response.sendRedirect("/Projet_JSP/admin/AjoutPizza.jsp"); 
 		    } else {
 		        float prix = Float.parseFloat(prixStr);

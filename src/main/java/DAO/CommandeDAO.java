@@ -18,17 +18,16 @@ public class CommandeDAO {
 	public CommandeDAO()
 	{
 		sessionFactory = util.HibernateUtil.getSessionFactory();
-		//session= sessionFactory.openSession();
+		
 	}
 	public Commande create(Commande l) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
-		//boolean success = false;
+	
 		try {
 			tx = session.beginTransaction();
 			session.persist(l);
 			tx.commit();
-			//success = true;
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
@@ -249,15 +248,13 @@ public class CommandeDAO {
 	    List<Commande> results = session.createQuery("from Commande where valid_com = :validFlag and client.id_cli = :idc", Commande.class)
 	            .setParameter("validFlag", 0)
 	            .setParameter("idc", idcli)
-	            .getResultList(); // Utilise getResultList() au lieu de getSingleResult()
+	            .getResultList(); 
 	    
 	    session.close();
 	    
 	    if (!results.isEmpty()) {
-	        // S'il y a des résultats, retournez le premier élément de la liste
 	        return results.get(0);
 	    } else {
-	        // S'il n'y a pas de résultats, retournez null ou gérez le cas en conséquence dans votre application
 	        return null;
 	    }
 	}
@@ -268,21 +265,20 @@ public class CommandeDAO {
 	    List<Commande> results = session.createQuery("from Commande where valid_com = :validFlag and livreur.id_liv = :idc order by date_com asc", Commande.class)
 	            .setParameter("validFlag", 1)
 	            .setParameter("idc", idliv)
-	            .getResultList(); // Utilise getResultList() au lieu de getSingleResult()
+	            .getResultList(); 
 	    
 	    session.close();
 	    
 	    if (!results.isEmpty()) {
-	        // S'il y a des résultats, retournez le premier élément de la liste
+
 	        return results;
 	    } else {
-	        // S'il n'y a pas de résultats, retournez null ou gérez le cas en conséquence dans votre application
+
 	        return null;
 	    }
 	}
 
 	public List<Commande> getAllComByDate(){
-		//List<Commande> result = null;
 		Session session=sessionFactory.openSession();
 		List<Commande> results = session.createQuery("from Commande order by date_com asc", Commande.class)
 			    .getResultList();
